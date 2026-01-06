@@ -1,0 +1,182 @@
+.footer-p-logo {
+    display: flex;
+    gap: 20px;
+}
+.footer__column a {
+    color: #fff;
+}
+.foot-col1 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 40rem;
+    margin-bottom: 2rem;
+  border-bottom: 1px solid #222;
+}
+
+.custom-footer {
+  background-color: #000;
+  color: #fff;
+ padding: 2rem 2rem 0 2rem;
+  font-family: inherit;
+}
+
+.footer__newsletter h4,
+.footer__social h4 {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.footer__newsletter {
+  margin-bottom: 2rem;
+}
+
+.footer__newsletter form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.footer__newsletter input[type="email"] {
+  flex: 1 1 250px;
+  padding: 1.2rem;
+  border: none;
+  outline: none;
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.footer__newsletter button {
+  padding: 0.75rem 1rem;
+  background: #fff;
+  color: #000;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+.footer__newsletter button:hover {
+background: #A2732A;
+ color: #fff;
+}
+
+.footer__social {
+  margin-bottom: 2rem;
+  display: grid;
+  justify-content: end;
+}
+
+.footer__social .social-icons {
+  display: flex;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+
+.footer__social .social-icons a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2rem;
+      transition: 0.3s ease-in-out;
+  
+}
+.footer__social .social-icons a:hover {transform: translateY(-3px);}
+
+.footer__links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer__column h5 {
+  font-size: 1.3rem;
+    margin-bottom: .75rem;
+    text-transform: capitalize;
+    color: #fff;
+    font-weight: 600;
+}
+
+.footer__column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer__column ul li {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  line-height: 22px;
+}
+
+.footer__column ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer__column ul li a:hover {
+  text-decoration: underline;
+}
+
+.footer__contact {
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  display: flex;
+    justify-content: space-between;
+  align-items: center;
+}
+
+.footer__contact a {
+  color: #ffae00;
+  text-decoration: none;
+}
+
+.footer__copyright {
+    font-size: .85rem;
+    text-align: center;
+    border-top: 1px solid #222;
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+/* Responsive tweaks */
+@media (max-width: 760px) {
+  .footer__contact {     flex-direction: column;}
+  .footer__social {
+justify-content: unset;
+}
+  .foot-col1 { gap: 2rem;}
+  .footer__newsletter input[type=email] { flex: 1 1 40px; }
+  .footer__newsletter form {
+    flex-direction: column;
+  }
+
+  .footer__newsletter input[type="email"],
+  .footer__newsletter button {
+    width: 100%;
+  }
+
+  .social-icons img {
+    width: 16px;
+}
+
+  .footer__social .social-icons {
+    justify-content: flex-start;
+    gap: 2rem;
+  }
+
+  .footer__links {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer__column h5 {
+    margin-top: 1rem;
+  }
+}
+
+@media (min-width: 760px) and (max-width: 1109px) {
+ .foot-col1 { gap: 5rem;}
+   
+
+
+} /* @media close */

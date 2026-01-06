@@ -1,0 +1,252 @@
+<section class="custom-footer">
+  <div class="footer__newsletter">
+    <h4>{{ section.settings.newsletter_heading }}</h4>
+    {% form 'customer' %}
+      <input type="email" name="contact[email]" placeholder="Enter your email address here" required>
+      <button type="submit">{{ section.settings.newsletter_button }}</button>
+    {% endform %}
+  </div>
+
+  <div class="footer__social">
+    <h4>{{ section.settings.social_heading }}</h4>
+    <div class="social-icons">
+      {% if section.settings.social_facebook != blank %}
+        <a href="{{ section.settings.social_facebook }}" target="_blank">Facebook</a>
+      {% endif %}
+      {% if section.settings.social_instagram != blank %}
+        <a href="{{ section.settings.social_instagram }}" target="_blank">Instagram</a>
+      {% endif %}
+      {% if section.settings.social_x != blank %}
+        <a href="{{ section.settings.social_x }}" target="_blank">X</a>
+      {% endif %}
+      {% if section.settings.social_whatsapp != blank %}
+        <a href="https://wa.me/{{ section.settings.social_whatsapp }}" target="_blank">WhatsApp</a>
+      {% endif %}
+      {% if section.settings.social_linkedin != blank %}
+        <a href="{{ section.settings.social_linkedin }}" target="_blank">LinkedIn</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="footer__links">
+    <div class="footer__column">
+      <h5>Top Brands</h5>
+      <ul>
+        <li>{{ section.settings.brand_1 }}</li>
+        <li>{{ section.settings.brand_2 }}</li>
+        <li>{{ section.settings.brand_3 }}</li>
+        <li>{{ section.settings.brand_4 }}</li>
+        <li>{{ section.settings.brand_5 }}</li>
+      </ul>
+    </div>
+    <div class="footer__column">
+      <h5>Top Categories</h5>
+      <ul>
+        <li>{{ section.settings.category_1 }}</li>
+        <li>{{ section.settings.category_2 }}</li>
+        <li>{{ section.settings.category_3 }}</li>
+        <li>{{ section.settings.category_4 }}</li>
+        <li>{{ section.settings.category_5 }}</li>
+      </ul>
+    </div>
+    <div class="footer__column">
+      <h5>Customer Care</h5>
+      <ul>
+        {% for link in section.settings.customer_care_links.links %}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="footer__column">
+      <h5>About Us</h5>
+      <ul>
+        {% for link in section.settings.about_us_links.links %}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {% endfor %}
+      </ul>
+      <h5>Legal</h5>
+      <ul>
+        {% for link in section.settings.legal_links.links %}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="footer__column">
+      <h5>Shipping & Returns</h5>
+      <ul>
+        {% for link in section.settings.shipping_links.links %}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer__contact">
+    <p>Contact Customer Care: <a href="tel:{{ section.settings.phone_number }}">{{ section.settings.phone_label }}</a></p>
+    <p>WhatsApp Customer Care: <a href="https://wa.me/{{ section.settings.whatsapp }}">{{ section.settings.whatsapp }}</a></p>
+  </div>
+
+  <div class="footer__copyright">
+    <p>{{ section.settings.copyright_text }}</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Newsletter Heading",
+      "default": "SUBSCRIBE TO OUR NEWSLETTER"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_button",
+      "label": "Newsletter Button Text",
+      "default": "SUBSCRIBE"
+    },
+    {
+      "type": "text",
+      "id": "social_heading",
+      "label": "Social Heading",
+      "default": "Follow Us"
+    },
+    {
+      "type": "url",
+      "id": "social_facebook",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "social_x",
+      "label": "X (Twitter) URL"
+    },
+    {
+      "type": "url",
+      "id": "social_instagram",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "text",
+      "id": "social_whatsapp",
+      "label": "WhatsApp Number (no plus sign)"
+    },
+    {
+      "type": "url",
+      "id": "social_linkedin",
+      "label": "LinkedIn URL"
+    },
+    {
+      "type": "text",
+      "id": "brand_1",
+      "label": "Top Brand 1",
+      "default": "NASS"
+    },
+    {
+      "type": "text",
+      "id": "brand_2",
+      "label": "Top Brand 2",
+      "default": "Dolce & Gabbana"
+    },
+    {
+      "type": "text",
+      "id": "brand_3",
+      "label": "Top Brand 3",
+      "default": "Valentino Garavani"
+    },
+    {
+      "type": "text",
+      "id": "brand_4",
+      "label": "Top Brand 4",
+      "default": "Saint Laurent"
+    },
+    {
+      "type": "text",
+      "id": "brand_5",
+      "label": "Top Brand 5",
+      "default": "Bottega Veneta"
+    },
+    {
+      "type": "text",
+      "id": "category_1",
+      "label": "Top Category 1",
+      "default": "Clothing"
+    },
+    {
+      "type": "text",
+      "id": "category_2",
+      "label": "Top Category 2",
+      "default": "Shoes"
+    },
+    {
+      "type": "text",
+      "id": "category_3",
+      "label": "Top Category 3",
+      "default": "Bags"
+    },
+    {
+      "type": "text",
+      "id": "category_4",
+      "label": "Top Category 4",
+      "default": "Beauty"
+    },
+    {
+      "type": "text",
+      "id": "category_5",
+      "label": "Top Category 5",
+      "default": "Jewellery"
+    },
+    {
+      "type": "link_list",
+      "id": "customer_care_links",
+      "label": "Customer Care Links"
+    },
+    {
+      "type": "link_list",
+      "id": "about_us_links",
+      "label": "About Us Links"
+    },
+    {
+      "type": "link_list",
+      "id": "legal_links",
+      "label": "Legal Links"
+    },
+    {
+      "type": "link_list",
+      "id": "shipping_links",
+      "label": "Shipping & Returns Links"
+    },
+    {
+      "type": "text",
+      "id": "phone_label",
+      "label": "Phone Label",
+      "default": "800 LEMOJE (800 686277)"
+    },
+    {
+      "type": "text",
+      "id": "phone_number",
+      "label": "Phone Number",
+      "default": "800686277"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp",
+      "label": "WhatsApp Number",
+      "default": "97144223100"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright Text",
+      "default": "ATNR. 2025. All Rights Reserved"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Footer"
+    }
+  ]
+}
+{% endschema %}

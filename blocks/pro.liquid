@@ -1,0 +1,160 @@
+{% stylesheet %}
+.tab-section {
+  margin-top: 2rem;
+}
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+}
+.tab {
+  margin-right: 1.5rem;
+  padding-bottom: 0.5rem;
+  cursor: pointer;
+}
+.tab.active {
+  border-bottom: 2px solid black;
+}
+.tab-content {
+  display: none;
+  padding-top: 1rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+.tab-content.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Accordion for Mobile */
+.accordion-item {
+  border-top: 1px solid #ccc;
+}
+.accordion-title {
+  cursor: pointer;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+.accordion-content.open {
+  max-height: 500px;
+}
+{% endstylesheet %}
+
+<div class="tab-section">
+  <div class="desktop-tabs">
+    <div class="tabs">
+      <div class="tab active" data-tab="editor">Editor's advice</div>
+      <div class="tab" data-tab="sizefit">Size & Fit</div>
+      <div class="tab" data-tab="details">Design details</div>
+      <div class="tab" data-tab="delivery">Delivery & Free Returns</div>
+    </div>
+
+    <div class="tab-content active" id="editor">{{ section.settings.editors_advice }}</div>
+    <div class="tab-content" id="sizefit">{{ section.settings.size_fit }}</div>
+    <div class="tab-content" id="details">{{ product.description }}</div>
+    <div class="tab-content" id="delivery">{{ section.settings.delivery }}</div>
+  </div>
+
+  <div class="mobile-accordion">
+    <div class="accordion-item">
+      <div class="accordion-title">Editor's advice <span>▼</span></div>
+      <div class="accordion-content">{{ section.settings.editors_advice }}</div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-title">Size & Fit <span>▼</span></div>
+      <div class="accordion-content">{{ section.settings.size_fit }}</div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-title">Design details <span>▼</span></div>
+      <div class="accordion-content">{{ product.description }}</div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-title">Delivery & Free Returns <span>▼</span></div>
+      <div class="accordion-content">{{ section.settings.delivery }}</div>
+    </div>
+  </div>
+</div>
+
+{% javascript %}
+document.addEventListener('DOMContentLoaded', () => {
+  const tabs = document.querySelectorAll('.tab');
+  const contents = document.querySelectorAll('.tab-content');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  const accordions = document.querySelectorAll('.accordion-title');
+  accordions.forEach(title => {
+    title.addEventListener('click', () => {
+      const content = title.nextElementSibling;
+      content.classList.toggle('open');
+      title.querySelector('span').textContent = content.classList.contains('open') ? '▲' : '▼';
+    });
+  });
+
+  function handleResize() {
+    const desktop = document.querySelector('.desktop-tabs');
+    const mobile = document.querySelector('.mobile-accordion');
+    if (window.innerWidth < 768) {
+      desktop.style.display = 'none';
+      mobile.style.display = 'block';
+    } else {
+      desktop.style.display = 'block';
+      mobile.style.display = 'none';
+    }
+  }
+  handleResize();
+  window.addEventListener('resize', handleResize);
+});
+{% endjavascript %}
+
+
+
+{% schema %}
+{
+  "name": "Product Tabs",
+  "tag": null,
+  "settings": [
+      {
+      "type": "textarea",
+      "id": "editors_advice",
+      "label": "Editor's Advice",
+      "default": "Add editor's content here."
+    },
+    {
+      "type": "textarea",
+      "id": "size_fit",
+      "label": "Size & Fit",
+      "default": "Add size and fit info here."
+    },
+    {
+      "type": "textarea",
+      "id": "delivery",
+      "label": "Delivery & Free Returns",
+      "default": "Add delivery info here."
+    }
+   
+  ],
+  "presets": [
+    {
+      "name": "Product Tabs"
+    }
+  ]
+}
+{% endschema %}

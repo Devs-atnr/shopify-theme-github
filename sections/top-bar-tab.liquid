@@ -1,0 +1,62 @@
+{% schema %}
+  {
+    "name": "Top Bar Tab",
+    "settings": [
+   {
+      "type": "link_list",
+      "id": "menu-two",
+      "label": "Navigation Menu 2",
+      "default": "main-menu"
+    }
+      
+    ],
+     "presets": [
+    {
+      "name": "top bar tab",
+
+    }
+  ]
+  }
+{% endschema %}
+
+     <div class="my-menu2"> 
+
+       <nav class="header__nav2">
+    {%- for link in section.settings.menu-two.links -%}
+      <a href="{{ link.url }}" class="{% if link.active %}active-by-liquid{% endif %} header__nav-item2 ">{{ link.title }}</a>
+    {%- endfor -%}
+  </nav>
+  </div>
+  
+{%- style -%}
+/* for mobile and tablet*/
+@media screen and (max-width: 990px) {
+  /* .shopify-section-header-sticky {display: none;} */
+/* header.cus-header {display: none;} */
+.header__nav2 {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 2.5rem;
+    overflow-x: auto;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+}
+
+   } /*close */
+{%- endstyle -%}
+<!-- 
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+  const navLinks = document.querySelectorAll('.header__nav2 a');
+  
+  navLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      // Remove 'active' class from all links
+      navLinks.forEach(l => l.classList.remove('active'));
+      
+      // Add 'active' class to clicked link
+      this.classList.add('active');
+    });
+  });
+});
+</script> -->

@@ -1,0 +1,167 @@
+<div class="five-section {{ section.settings.custom_class }}">
+
+    {% for i in (1..5) %}
+        {% assign image_id = "image_" | append: i %}
+        {% assign title_id = "title_" | append: i %}
+        {% assign link_id  = "link_"  | append: i %}
+
+        {% assign img = section.settings[image_id] %}
+        {% assign title = section.settings[title_id] %}
+        {% assign link = section.settings[link_id] %}
+
+        <a class="five-box" href="{{ link }}">
+            <div class="five-img">
+                {% if img %}
+                    <img src="{{ img | image_url: width: 900 }}" alt="{{ title }}">
+                {% else %}
+                    <div class="placeholder"></div>
+                {% endif %}
+            </div>
+            <p class="five-title">{{ title }}</p>
+        </a>
+    {% endfor %}
+
+</div>
+
+<style>
+ .three-coll { grid-template-columns: repeat(3, 1fr) !important; }
+.five-section {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    padding: 20px 5rem;
+    margin: 0 auto ;
+    max-width: 1850px;
+}
+
+.five-box {
+    text-decoration: none;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.five-img img,
+.five-img .placeholder {
+    width: 100%;
+    {% comment %} height: 330px; {% endcomment %}
+    object-fit: cover;
+    background: #f2f2f2;
+}
+
+.five-title {
+    margin-top: 12px;
+    font-size: 15px;
+    line-height: 15px;
+    border-bottom: 1px solid;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .five-section { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+  .five-section {padding: 20px 1.5rem; grid-template-columns: repeat(1fr); }
+}
+@media (max-width: 480px) {
+  .five-section { padding: 20px 1.5rem; grid-template-columns: 1fr !important; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Five Collection Blocks",
+  "settings": [
+    {"type": "text",
+   "id": "custom_class",
+   "label": "Custom CSS Class (optional)" },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Block 1 Image"
+    },
+    {
+      "type": "text",
+      "id": "title_1",
+      "label": "Block 1 Title"
+    },
+    {
+      "type": "url",
+      "id": "link_1",
+      "label": "Block 1 Link"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Block 2 Image"
+    },
+    {
+      "type": "text",
+      "id": "title_2",
+      "label": "Block 2 Title"
+    },
+    {
+      "type": "url",
+      "id": "link_2",
+      "label": "Block 2 Link"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Block 3 Image"
+    },
+    {
+      "type": "text",
+      "id": "title_3",
+      "label": "Block 3 Title"
+    },
+    {
+      "type": "url",
+      "id": "link_3",
+      "label": "Block 3 Link"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "image_4",
+      "label": "Block 4 Image"
+    },
+    {
+      "type": "text",
+      "id": "title_4",
+      "label": "Block 4 Title"
+    },
+    {
+      "type": "url",
+      "id": "link_4",
+      "label": "Block 4 Link"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "image_5",
+      "label": "Block 5 Image"
+    },
+    {
+      "type": "text",
+      "id": "title_5",
+      "label": "Block 5 Title"
+    },
+    {
+      "type": "url",
+      "id": "link_5",
+      "label": "Block 5 Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Five Collection Blocks"
+    }
+  ]
+}
+{% endschema %}

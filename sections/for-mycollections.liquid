@@ -1,0 +1,66 @@
+<style>
+h3.col-head {
+    position: relative;
+    bottom: 13rem;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 400;
+    font-family: inter, sans-serif;
+    color: #fff;
+    text-decoration: none;
+}
+  
+.collection-list-container-{{section.id}} {
+width:90vw;
+display:grid;
+justify-content:center;   
+
+gap:2rem;
+box-sizing: border-box; 
+margin-left:auto;
+margin-right:auto; 
+padding-top: 2rem;
+padding-bottom: 2rem;  
+} 
+.collection_image-{{section.id}} {
+width:100%;
+height:auto;
+object-fit: cover;  
+}
+@media screen and (max-width:767px) {
+.collection-list-container-{{section.id}} { grid-template-columns: 1fr 1fr;}
+  
+}  
+  
+  
+</style>
+
+<div class="collection-main-{{section.id}}" >
+  <div class="collection-list-container-{{section.id}}" >
+{% for block in section.blocks %}  
+ 
+<a class="collection-link-{{section.id}}" href="{{block.settings.collection_link  }}">
+<img class="collection_image-{{section.id}}" src="{{block.settings.collection_image | img_url:"" }}"> 
+<h3 class="col-head">{{block.settings.collection_heading}}  </h3> 
+</a>
+<a class="col-btn">{{block.settings.collection_btn}}</a>   
+{% endfor %}
+   </div>
+</div>
+
+{% schema %}
+  {
+    "name": "home collection",
+    "settings": [],
+    "blocks": [
+     
+      {"type": "collection-list", "name":"collection-one", 
+                "settings":[
+               {"type":"text", "id":"collection_btn",  "label": "collection button" },    
+               {"type":"text", "id":"collection_heading",  "label": "collection heading" },    
+               {"type":"image_picker", "id":"collection_image",  "label": "Select image" }, 
+               {"type":"url", "id":"collection_link",  "label": "Select collection" } 
+                           ] }],
+    "presets":[{"name": "home collection"}] 
+  }
+{% endschema %}

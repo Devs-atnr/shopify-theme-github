@@ -1,0 +1,27 @@
+<div class="breadbar"> 
+<nav class="breadcrumb page-width" role="navigation" aria-label="breadcrumbs">
+  <a href="{{ routes.root_url }}">Home</a>
+  {% if product %}
+    {% if product.collections.size > 0 %}
+      {% assign collection = product.collections.first %}
+      &nbsp;&gt;&nbsp;
+      <a href="{{ collection.url }}">{{ collection.title }}</a>
+    {% endif %}
+    &nbsp;&gt;&nbsp;
+    <span>{{ product.title }}</span>
+  {% endif %}
+</nav>
+</div>
+{% schema %}
+{
+  "name": "Breadcrumb",
+  "settings": [],
+
+  "presets": [
+    {
+      "name": "Breadcrumb",
+      "category": "Breadcrumbs"
+    }
+  ]
+}
+{% endschema %}

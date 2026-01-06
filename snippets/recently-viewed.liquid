@@ -1,0 +1,190 @@
+<style>
+  /* Layout & Aspect Ratio */
+  .js-recentPdpBlock {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 30px;
+    justify-content: center;
+  }
+  
+  [dir="rtl"] .js-recentPdpBlock { justify-content: flex-start; text-align: right; }
+
+.recent-item-card {
+   
+    flex: 0 0 calc(20% - 20px); 
+    min-width: 160px; 
+  }
+
+ @media screen and (max-width: 1000px) {
+    .recent-item-card { flex: 0 0 calc(33.33% - 20px); } /* on Tablets  3 */
+  }
+
+  @media screen and (max-width: 749px) {
+    .recent-item-card { flex: 0 0 calc(50% - 20px); } /* on Mobile  2 */
+  }
+
+  /* Fixed Image Ratio */
+  .c-product__img {
+    width: 100%;
+    aspect-ratio: 1 / 1; 
+    overflow: hidden;
+    border-radius: 0px;
+    background: #f3f3f3;
+  }
+
+  .main-product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* adjust images size  */
+    transition: opacity 0.3s ease;
+  }
+
+  .c-product__title { font-size: 1.4rem; margin: 10px 0 5px; font-weight: 400; height: 3.2rem; overflow: hidden; }
+  .pdp-price-container { margin-bottom: 10px; font-size: 1.4rem; font-weight: bold; }
+
+  /* Swatch Slider with Arrows */
+  .swatch-container-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .recent-variant-swatches {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Hide for Firefox */
+    -ms-overflow-style: none; /* Hide for IE */
+  }
+
+  .recent-variant-swatches::-webkit-scrollbar { display: none; } /* Hide for Chrome/Safari */
+
+  .recent-v-thumb {
+    width: 45px;
+    height: 55px;
+    flex-shrink: 0;
+    border: 1px solid #e8e8e8;
+    cursor: pointer;
+    object-fit: cover;
+  }
+
+  .swatch-arrow {
+    background: rgba(255,255,255,0.8);
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 2;
+    font-size: 12px;
+    user-select: none;
+  }
+  
+  /* RTL Friendly Arrows */
+  .arrow-left { left: -10px; }
+  .arrow-right { right: -10px; }
+  [dir="rtl"] .arrow-left { left: auto; right: -10px; transform: rotate(180deg); }
+  [dir="rtl"] .arrow-right { right: auto; left: -10px; transform: rotate(180deg); }
+</style>
+
+<section class="page-width">
+  <div class="recently-title">
+    <h2 class="title inline-richtext h2 center" style="text-align: center;">Recently Viewed</h2>
+  </div>
+
+  <div class="js-recentPdpBlock"></div>
+
+  {% if product %}
+    {% comment %} Logic to get UNIQUE variant images only {% endcomment %}
+    {% assign used_images = "" %}
+    <script>
+      (function() {
+        const pdpData = {
+          productTitle: {{ product.title | json }},
+          productImg: {{ product.featured_image | img_url: '600x' | json }},
+          productUrl: {{ product.url | json }},
+          productHandle: {{ product.handle | json }},
+          price: {{ product.price | money | json }},
+          compareAtPrice: {{ product.compare_at_price | money | json }},
+          onSale: {% if product.compare_at_price > product.price %}true{% else %}false{% endif %},
+          variants: [
+            {% for variant in product.variants %}
+              {% if variant.image %}
+                {% unless used_images contains variant.image.src %}
+                  {
+                    img: {{ variant.image | img_url: '200x' | json }}
+                  },
+                  {% assign used_images = used_images | append: variant.image.src | append: "," %}
+                {% endunless %}
+              {% endif %}
+            {% endfor %}
+          ]
+        };
+
+        let items = JSON.parse(localStorage.getItem('recently_viewed') || '[]');
+        items = items.filter(i => i.productHandle !== pdpData.productHandle);
+        items.unshift(pdpData);
+        localStorage.setItem('recently_viewed', JSON.stringify(items.slice(0, 5)));
+      })();
+    </script>
+  {% endif %}
+
+  <script>
+    // Image swap & Slider functions
+    function updateRecentImage(imgElement, newSrc) {
+       const card = imgElement.closest('.recent-item-card');
+       card.querySelector('.main-product-img').src = newSrc;
+    }
+
+    function scrollSwatches(btn, direction) {
+      const container = btn.parentElement.querySelector('.recent-variant-swatches');
+      const scrollAmount = 100;
+      container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const container = document.querySelector('.js-recentPdpBlock');
+      const data = JSON.parse(localStorage.getItem('recently_viewed') || '[]');
+
+      if (data.length === 0) {
+        document.querySelector('.recently-title').style.display = 'none';
+        return;
+      }
+
+      container.innerHTML = data.map(item => `
+        <div class="recent-item-card">
+          <div class="c-product">
+            <div class="c-product__img">
+              <a href="${item.productUrl}">
+                <img src="${item.productImg}" class="main-product-img" loading="lazy">
+              </a>
+            </div>
+            <h3 class="c-product__title">
+              <a href="${item.productUrl}">${item.productTitle}</a>
+            </h3>
+            <div class="pdp-price-container">
+              ${item.onSale ? `<span style="color:#d02e2e">${item.price}</span> <span style="text-decoration:line-through; color:#999; font-size:0.8em">${item.compareAtPrice}</span>` : `<span>${item.price}</span>`}
+            </div>
+            
+            ${item.variants.length > 1 ? `
+              <div class="swatch-container-wrapper">
+                <div class="swatch-arrow arrow-left" onclick="scrollSwatches(this, -1)">&#10094;</div>
+                <div class="recent-variant-swatches">
+                  ${item.variants.map(v => `<img class="recent-v-thumb" src="${v.img}" onclick="updateRecentImage(this, '${v.img}')">`).join('')}
+                </div>
+                <div class="swatch-arrow arrow-right" onclick="scrollSwatches(this, 1)">&#10095;</div>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `).join('');
+    });
+  </script>
+</section>

@@ -1,0 +1,373 @@
+{%- comment -%} contact-us.liquid {%- endcomment -%}
+{% schema %}
+{
+  "name": "Contact Us",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Contact Us"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Ask us anything! We're here to help."
+    },
+    {
+      "type": "header",
+      "content": "Live Help Settings"
+    },
+    {
+      "type": "text",
+      "id": "live_help_text",
+      "label": "Live Help Text",
+      "default": "If you have an issue or question that requires immediate assistance, you can click the button below to chat live with a Customer Service representative. If we aren't available, drop us an email to the left and we will get back to you within 24:36 hours!"
+    },
+    {
+      "type": "text",
+      "id": "phone_text",
+      "label": "Phone Text",
+      "default": "TEXT: 059 617 2155"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email",
+      "default": "Contactus@Lemoje.com"
+    },
+    {
+      "type": "header",
+      "content": "Company Info"
+    },
+    {
+      "type": "text",
+      "id": "company_name",
+      "label": "Company Name",
+      "default": "Al Moallim United Co."
+    },
+    {
+      "type": "text",
+      "id": "city",
+      "label": "City",
+      "default": "Jeddah"
+    },
+    {
+      "type": "text",
+      "id": "country",
+      "label": "Country",
+      "default": "Saudi Arabia"
+    },
+    {
+      "type": "header",
+      "content": "Opening Hours"
+    },
+    {
+      "type": "text",
+      "id": "weekdays_hours",
+      "label": "Weekdays Hours",
+      "default": "SUN to THU: 11:00AM - 5:00PM"
+    },
+    {
+      "type": "text",
+      "id": "saturday_hours",
+      "label": "Saturday Hours",
+      "default": "SAT: 1:00PM - 4:00PM"
+    },
+    {
+      "type": "header",
+      "content": "Form Settings"
+    },
+    {
+      "type": "text",
+      "id": "submit_text",
+      "label": "Submit Button Text",
+      "default": "SUBMIT CONTACT"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Us",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  /* Success message styling */
+.form-success {
+  background-color: #dff0d8;
+  color: #3c763d;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #d6e9c6;
+  border-radius: 4px;
+}
+
+/* Error message styling */
+.form-errors {
+  background-color: #f2dede;
+  color: #a94442;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ebccd1;
+  border-radius: 4px;
+}
+    .opening-hours #Icons {
+    width: 20px;
+    height: 20px;
+}
+  .contact-method #Icons {
+    width: 20px;
+    height: 20px;
+}
+  .company-info #Icons {
+    width: 20px;
+    height: 20px;
+}
+  .contact-us-section {
+    /* max-width: 1200px; */
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+     font-size: 14px;
+  }
+  
+  .contact-form-container {
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .contact-info-container {
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .contact-heading {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .contact-subheading {
+   font-size: 14px;
+    margin-bottom: 30px;
+    
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 18px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+  }
+  
+  .form-group textarea {
+    min-height: 120px;
+  }
+  
+  .required-field::after {
+    content: " *";
+    color: red;
+  }
+  
+.submit-btn {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 18px 30px;
+    font-size: 14px;
+    cursor: pointer;
+    text-transform: uppercase;
+    width: 40%;
+    margin-top: 15px;
+}
+  
+  .submit-btn:hover {
+    background: #a2732a;
+  }
+  
+  .live-help-box {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-top: 30px;
+  
+  }
+  
+  .live-help-text {
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  
+  .contact-method {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+     gap: 10px;
+  }
+  
+  .contact-method i {
+    margin-right: 10px;
+    color: #666;
+  }
+  
+  .company-info {
+       margin-top: 30px;
+    line-height: 1.6;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 0 20px;
+  }
+  
+  
+  .opening-hours {
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    line-height: 1.6;
+    font-size: 14px;
+    padding: 0 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .submit-btn {
+    width: 50%;
+}
+    .contact-us-section {
+      flex-direction: column;
+      gap: 30px;
+    }
+    
+    .contact-form-container,
+    .contact-info-container {
+      width: 100%;
+    }
+  }
+</style>
+
+<div class="contact-us-section page-width">
+  <div class="contact-form-container">
+    <h1 class="contact-heading">{{ section.settings.heading }}</h1>
+    <p class="contact-subheading">{{ section.settings.subheading }}</p>
+    
+ {% form 'contact', class: 'contact-form' %}
+  {% if form.posted_successfully? %}
+    <div class="form-success">
+      Thank you for your message! We'll get back to you soon.
+    </div>
+  {% endif %}
+      
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="contact[name]">
+      </div>
+      
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="contact[phone]">
+      </div>
+      
+      <div class="form-group">
+        <label for="email" class="required-field">Email</label>
+        <input type="email" id="email" name="contact[email]" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="comment" class="required-field">Comment</label>
+        <textarea id="comment" name="contact[body]" required></textarea>
+      </div>
+      
+      <button type="submit" class="submit-btn">{{ section.settings.submit_text }}</button>
+    {% endform %}
+  </div>
+  
+  <div class="contact-info-container">
+    <div class="live-help-box">
+      <h3>Live Help</h3>
+      <p class="live-help-text">{{ section.settings.live_help_text }}</p>
+      
+      <div class="contact-method">
+<svg width="20px" height="22px" viewBox="0 0 13 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>phone_iphone</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Outlined" transform="translate(-717.000000, -2503.000000)">
+            <g id="Hardware" transform="translate(100.000000, 2404.000000)">
+                <g id="Outlined-/-Hardware-/-phone_iphone" transform="translate(612.000000, 98.000000)">
+                    <g>
+                        <polygon id="Path" points="0 0 24 0 24 24 0 24"></polygon>
+                        <path d="M15.5,1 L7.5,1 C6.12,1 5,2.12 5,3.5 L5,20.5 C5,21.88 6.12,23 7.5,23 L15.5,23 C16.88,23 18,21.88 18,20.5 L18,3.5 C18,2.12 16.88,1 15.5,1 Z M11.5,22 C10.67,22 10,21.33 10,20.5 C10,19.67 10.67,19 11.5,19 C12.33,19 13,19.67 13,20.5 C13,21.33 12.33,22 11.5,22 Z M16,18 L7,18 L7,4 L16,4 L16,18 Z" id="🔹-Icon-Color" fill="#1D1D1D"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
+        <span>{{ section.settings.phone_text }}</span>
+      </div>
+      
+      <div class="contact-method">
+        
+        <svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st1{fill:none;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<path class="st0" d="M25,27H7c-2.2,0-4-1.8-4-4V9c0-2.2,1.8-4,4-4h18c2.2,0,4,1.8,4,4v14C29,25.2,27.2,27,25,27z"></path>
+<polyline class="st0" points="3,10 16,18 29,10 "></polyline>
+</svg> 
+        <span>{{ section.settings.email }}</span>
+      </div>
+    </div>
+    
+    <div class="company-info">
+<svg id="Icons" width="100%" height="100%" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="Icon"><path d="M12,1.25c-3.723,0 -6.75,3.054 -6.75,6.821c0,1.276 0.562,2.859 1.38,4.438c1.801,3.477 4.801,6.979 4.801,6.979c0.142,0.166 0.35,0.262 0.569,0.262c0.219,-0 0.427,-0.096 0.569,-0.262c0,0 3,-3.502 4.801,-6.979c0.818,-1.579 1.38,-3.162 1.38,-4.438c-0,-3.767 -3.027,-6.821 -6.75,-6.821Zm-0,1.5c2.9,-0 5.25,2.387 5.25,5.321c0,1.466 -0.93,3.376 -2.004,5.157c-1.152,1.91 -2.5,3.664 -3.246,4.592c-0.746,-0.928 -2.094,-2.682 -3.246,-4.592c-1.074,-1.781 -2.004,-3.691 -2.004,-5.157c-0,-2.934 2.35,-5.321 5.25,-5.321Z"></path><path d="M12,5.25c-1.518,0 -2.75,1.232 -2.75,2.75c0,1.518 1.232,2.75 2.75,2.75c1.518,0 2.75,-1.232 2.75,-2.75c0,-1.518 -1.232,-2.75 -2.75,-2.75Zm0,1.5c0.69,0 1.25,0.56 1.25,1.25c0,0.69 -0.56,1.25 -1.25,1.25c-0.69,0 -1.25,-0.56 -1.25,-1.25c0,-0.69 0.56,-1.25 1.25,-1.25Z"></path><path d="M16.784,17.377c0.813,0.244 1.483,0.546 1.946,0.9c0.3,0.228 0.52,0.451 0.52,0.723c-0,0.16 -0.091,0.305 -0.219,0.45c-0.212,0.239 -0.527,0.454 -0.917,0.654c-1.378,0.705 -3.606,1.146 -6.114,1.146c-2.508,0 -4.736,-0.441 -6.114,-1.146c-0.39,-0.2 -0.705,-0.415 -0.917,-0.654c-0.128,-0.145 -0.219,-0.29 -0.219,-0.45c0,-0.272 0.22,-0.495 0.52,-0.723c0.463,-0.354 1.133,-0.656 1.946,-0.9c0.396,-0.119 0.621,-0.538 0.502,-0.934c-0.119,-0.397 -0.538,-0.622 -0.934,-0.503c-1.238,0.373 -2.2,0.884 -2.778,1.449c-0.508,0.495 -0.756,1.049 -0.756,1.611c0,0.702 0.397,1.402 1.204,1.986c1.416,1.024 4.26,1.764 7.546,1.764c3.286,0 6.13,-0.74 7.546,-1.764c0.807,-0.584 1.204,-1.284 1.204,-1.986c-0,-0.562 -0.248,-1.116 -0.756,-1.611c-0.578,-0.565 -1.54,-1.076 -2.778,-1.449c-0.396,-0.119 -0.815,0.106 -0.934,0.503c-0.119,0.396 0.106,0.815 0.502,0.934Z"></path></g></svg>
+      <p>{{ section.settings.company_name }}</p>
+      <p>{{ section.settings.city }}</p>
+      <p>{{ section.settings.country }}</p>
+    </div>
+    
+    <div class="opening-hours">
+<svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<circle class="st0" cx="16" cy="18" r="13"></circle>
+<circle class="st0" cx="16" cy="18" r="2"></circle>
+<line class="st0" x1="16" y1="9" x2="16" y2="16"></line>
+<line class="st0" x1="23" y1="18" x2="18" y2="18"></line>
+<line class="st0" x1="26" y1="9" x2="28" y2="7"></line>
+<line class="st0" x1="26" y1="5" x2="30" y2="9"></line>
+<path class="st0" d="M14,5.2V2c0-0.6,0.4-1,1-1h2c0.6,0,1,0.4,1,1v3.2"></path>
+</svg>
+      <h4>Opening Hours:</h4>
+      <p>{{ section.settings.weekdays_hours }}</p>
+      <p>{{ section.settings.saturday_hours }}</p>
+    </div>
+  </div>
+</div>
+
+{% unless request.design_mode %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+{% endunless %}
+

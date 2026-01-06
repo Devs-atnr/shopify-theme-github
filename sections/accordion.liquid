@@ -1,0 +1,220 @@
+{%- schema -%}
+{
+  "name": "Accordion FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading Size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Medium"
+        },
+        {
+          "value": "h1",
+          "label": "Large"
+        },
+        {
+          "value": "h3",
+          "label": "Small"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_first_open",
+      "label": "Enable first item open by default",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is your return policy?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Our return policy lasts 30 days. If 30 days have gone by since your purchase, unfortunately we can't offer you a refund or exchange.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Accordion FAQ",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>Our return policy lasts 30 days. If 30 days have gone by since your purchase, unfortunately we can't offer you a refund or exchange.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>Standard shipping typically takes 3-5 business days within the continental US.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{%- endschema -%}
+
+{%- style -%}
+.accordion-section {
+  padding: 40px 0;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.accordion-heading {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.accordion-item {
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 10px;
+}
+
+.accordion-button {
+  width: 100%;
+  font-family: 'Josefin Sans';
+  text-align: left;
+  padding: 15px 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.accordion-button:hover {
+  background-color: #f9f9f9;
+}
+
+.accordion-button:after {
+  content: '+';
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+.accordion-button[aria-expanded="true"]:after {
+  content: '-';
+  transform: rotate(0deg);
+}
+
+.accordion-content {
+  padding: 0 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.accordion-content[aria-hidden="false"] {
+  padding: 0 20px 20px;
+  max-height: 500px;
+}
+
+.accordion-content-inner {
+  padding-top: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .accordion-section {
+    padding: 30px 15px;
+  }
+  
+  .accordion-button {
+    font-size: 16px;
+    padding: 12px 15px;
+  }
+}
+
+  @media (min-width: 320px) and (max-width: 450px) {
+
+  .accordion-button {
+    font-size: 13px;
+ 
+  }
+}
+  
+{%- endstyle -%}
+
+<div class="accordion-section page-width">
+  <div class="accordion-heading">
+    <{{ section.settings.heading_size }}>{{ section.settings.heading }}</{{ section.settings.heading_size }}>
+  </div>
+  
+  <div class="accordion-container">
+    {%- for block in section.blocks -%}
+      <div class="accordion-item" {{ block.shopify_attributes }}>
+        <button class="accordion-button" 
+                aria-expanded="{% if section.settings.enable_first_open and forloop.first %}true{% else %}false{% endif %}" 
+                aria-controls="accordion-content-{{ block.id }}">
+          {{ block.settings.question }}
+        </button>
+        <div id="accordion-content-{{ block.id }}" 
+             class="accordion-content" 
+             aria-hidden="{% if section.settings.enable_first_open and forloop.first %}false{% else %}true{% endif %}">
+          <div class="accordion-content-inner">
+            {{ block.settings.answer }}
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const buttons = document.querySelectorAll('.accordion-button');
+  
+  buttons.forEach(button => {
+    button.addEventListener('click', function() {
+      const expanded = this.getAttribute('aria-expanded') === 'true';
+      const content = document.getElementById(this.getAttribute('aria-controls'));
+      
+      // Close all other accordion items
+      if (!expanded) {
+        buttons.forEach(btn => {
+          if (btn !== button) {
+            btn.setAttribute('aria-expanded', 'false');
+            const otherContent = document.getElementById(btn.getAttribute('aria-controls'));
+            otherContent.setAttribute('aria-hidden', 'true');
+          }
+        });
+      }
+      
+      // Toggle current item
+      this.setAttribute('aria-expanded', !expanded);
+      content.setAttribute('aria-hidden', expanded);
+    });
+  });
+});
+</script>

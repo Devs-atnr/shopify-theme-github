@@ -1,0 +1,190 @@
+{% unless product.has_only_default_variant %}
+  <variant-selects
+    id="variant-selects-{{ section.id }}"
+    data-section="{{ section.id }}"
+    {{ block.shopify_attributes }}
+  >
+
+    {%- for option in product.options_with_values -%}
+
+      {%- comment %}
+        1) HIDE OPTIONS THAT HAVE ONLY ONE NON-COLOR VALUE
+      {% endcomment -%}
+      {%- assign option_down = option.name | downcase -%}
+      {%- assign is_color_option = false -%}
+      {%- if option_down contains 'color' or option_down contains 'colour' or option_down contains 'shade' -%}
+        {%- assign is_color_option = true -%}
+      {%- endif -%}
+
+      {%- if option.values.size == 1 and is_color_option == false -%}
+        {% continue %}
+      {%- endif -%}
+
+
+      {%- comment %}
+        2) RECOGNIZE SWATCH MODE
+      {% endcomment -%}
+      {%- liquid
+        assign swatch_count = option.values | map: 'swatch' | compact | size
+        assign picker_type = block.settings.picker_type
+
+        if swatch_count > 0 and block.settings.swatch_shape != 'none'
+          if block.settings.picker_type == 'dropdown'
+            assign picker_type = 'swatch_dropdown'
+          else
+            assign picker_type = 'swatch'
+          endif
+        endif
+      -%}
+
+
+      {%- comment %}
+        3) SPECIAL CASE → IF COLOR HAS ONLY ONE VALUE
+      {% endcomment -%}
+      {%- if is_color_option and option.values.size == 1 -%}
+
+        {%- assign single_colour = option.values.first -%}
+
+        {%- assign variant_match = product.variants | where: 'option1', single_colour | first -%}
+        {%- if variant_match == blank %}
+          {%- assign variant_match = product.variants | where: 'option2', single_colour | first -%}
+        {%- endif %}
+        {%- if variant_match == blank %}
+          {%- assign variant_match = product.variants | where: 'option3', single_colour | first -%}
+        {%- endif %}
+
+        <div class="single-colour-option" style="margin-bottom:1rem;">
+          {% if variant_match.featured_image %}
+            <img
+              src="{{ variant_match.featured_image.src | img_url: '300x300' }}"
+              alt="{{ single_colour | escape }}"
+              style="width:80px;height:80px;object-fit:cover;border-radius:8px;"
+            >
+          {% endif %}
+          <p style="margin-top:6px;">
+            {{ option.name }}: {{ single_colour }}
+          </p>
+        </div>
+
+        {% continue %}
+      {%- endif -%}
+
+
+
+      {%- comment %}
+        4) MULTI-SWATCH MODE (NORMAL)
+      {% endcomment -%}
+
+      {%- if picker_type == 'swatch' -%}
+
+        <fieldset class="js product-form__input product-form__input--swatch">
+          <legend class="form__label">
+            {{ option.name }}:
+            <span data-selected-value>{{ option.selected_value }}</span>
+          </legend>
+
+          <div class="variant-swatches">
+
+            {% for value in option.values %}
+              
+              {%- comment %} Find variant that matches this color value {% endcomment -%}
+              {% assign variant_match = product.variants | where: 'option1', value | first %}
+              {% if variant_match == blank %}
+                {% assign variant_match = product.variants | where: 'option2', value | first %}
+              {% endif %}
+              {% if variant_match == blank %}
+                {% assign variant_match = product.variants | where: 'option3', value | first %}
+              {% endif %}
+
+              <label class="swatch-label" data-value="{{ value | escape }}">
+                <input
+                  type="radio"
+                  name="options[{{ option.name }}]"
+                  value="{{ value }}"
+                  {% if option.selected_value == value %}checked{% endif %}
+                  form="{{ product_form_id }}"
+                >
+
+                {% if is_color_option and variant_match.featured_image %}
+                  <!-- Variant Image Swatch -->
+                  <span class="swatch-image"
+                    style="
+                      width:38px;height:38px;
+                      display:inline-block;
+                      border-radius:50%;
+                      background-image:url('{{ variant_match.featured_image.src | img_url: '100x100' }}');
+                      background-size:cover;
+                      background-position:center;
+                      margin-right:6px;
+                    ">
+                  </span>
+                {% else %}
+                  {% render 'swatch', swatch: value.swatch, shape: block.settings.swatch_shape %}
+                {% endif %}
+
+                <span class="swatch-text">: {{ value }}</span>
+              </label>
+
+            {% endfor %}
+          </div>
+        </fieldset>
+
+
+
+      {%- elsif picker_type == 'button' -%}
+
+        <fieldset class="js product-form__input product-form__input--pill">
+          <legend class="form__label">{{ option.name }}</legend>
+          {% render 'product-variant-options',
+            product: product,
+            option: option,
+            block: block,
+            picker_type: picker_type
+          %}
+        </fieldset>
+
+
+
+      {%- else -%}
+        <div class="product-form__input product-form__input--dropdown">
+          <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
+            {{ option.name }}
+          </label>
+
+          <div class="select">
+            {% if picker_type == 'swatch_dropdown' %}
+              <span data-selected-value class="dropdown-swatch">
+                {% render 'swatch', swatch: option.selected_value.swatch, shape: block.settings.swatch_shape %}
+              </span>
+            {% endif %}
+
+            <select
+              id="Option-{{ section.id }}-{{ forloop.index0 }}"
+              class="select__select"
+              name="options[{{ option.name | escape }}]"
+              form="{{ product_form_id }}"
+            >
+              {% render 'product-variant-options',
+                product: product,
+                option: option,
+                block: block,
+                picker_type: picker_type
+              %}
+            </select>
+
+            <span class="svg-wrapper">
+              {{ 'icon-caret.svg' | inline_asset_content }}
+            </span>
+          </div>
+        </div>
+      {%- endif -%}
+
+    {% endfor %}
+
+
+    <script type="application/json" data-selected-variant>
+      {{ product.selected_or_first_available_variant | json }}
+    </script>
+
+  </variant-selects>
+{% endunless %}

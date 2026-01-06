@@ -1,0 +1,101 @@
+<style>  
+ /* .col-two {  display: flex;
+    align-items: center;
+    justify-content: center;} 
+  
+  .col-parentt
+ {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 5rem; 
+   padding-top: 20px;
+   padding-bottom: 20px;
+}
+   .col-parentt hr
+ {
+    background: #000;
+}
+   */
+
+   .col-parentt {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5rem;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .col-one,
+  .col-three {
+    display: flex;
+    align-items: center;
+  }
+
+  .col-one hr,
+  .col-three hr {
+    width: 100%;
+    border: none;
+    height: 1px;
+    background: #000;
+  }
+
+  .col-two {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* ✅ Responsive Fix */
+  @media screen and (max-width: 768px) {
+    .col-parentt {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .col-one,
+    .col-three {
+      display: none; /* Hide lines on small screens */
+    }
+
+    .col-two h2 {
+      font-size: 24px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Collection Logo",
+  "settings": [
+
+    {
+      "type": "image_picker",
+      "id": "logo_collection",
+      "label": "Upload Logo"
+    }],
+
+  "presets": [
+    {
+      "name": "Collection Logo",
+      "category": "Collections"
+    }
+  ]
+}
+{% endschema %}
+
+  <div class="col-parentt page-width"> 
+    <div class="col-one"> 
+    <hr>
+     </div>
+    
+      <div class="col-two"> 
+         
+    <a href="{{ routes.root_url }}">       
+    <img src="{{ section.settings.logo_collection | image_url: width: large }}" loading="lazy"> </a> </div> 
+           
+         <div class="col-three"> 
+           <hr>
+         </div>
+  </div>

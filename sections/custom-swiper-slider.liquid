@@ -1,0 +1,214 @@
+{% schema %}
+{
+  "name": "my swiper slider",
+  "settings": [
+{
+  "type": "checkbox",
+  "id": "show_price",
+  "label": "Show price",
+  "default": true
+},
+{
+  "type": "checkbox",
+  "id": "show_vendor",
+  "label": "Show vendor",
+  "default": false
+},
+{
+  "type": "select",
+  "id": "card_design",
+  "label": "Card Design",
+  "options": [
+    {
+      "value": "simple",
+      "label": "Simple"
+    },
+    {
+      "value": "modern",
+      "label": "Modern"
+    },
+    {
+      "value": "minimal",
+      "label": "Minimal"
+    }
+  ],
+  "default": "simple"
+},
+
+    
+{
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Featured Products"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 20,
+      "step": 1,
+      "default": 8,
+      "label": "Maximum products to show"
+    }
+
+
+    
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "my swiper slider",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+ 
+ <style>
+   .product-slider-section {
+  position: relative;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.product-slider-section:hover .swiper-button-next,
+.product-slider-section:hover .swiper-button-prev {
+  opacity: 1;
+}
+
+   /* Navigation arrows */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #000; /* Arrow color */
+  background: rgba(255, 255, 255, 0.8);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Hide bullets/pagination if you didn't set pagination: false */
+.swiper-pagination {
+  display: none !important;
+}
+   .product-card {
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.product-card img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.product-card h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.product-card .price {
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+  </style>
+
+
+  <div class="product-slider-section">
+  <h2 class="heading">{{ section.settings.heading }}</h2>
+  
+  <div class="swiper productSwiper">
+    <div class="swiper-wrapper">
+      {%- for product in collections[section.settings.collection].products limit: section.settings.products_to_show -%}
+        <div class="swiper-slide">
+          <div class="product-card">
+            <a href="{{ product.url }}">
+              <img src="{{ product.featured_image | img_url: '300x' }}" alt="{{ product.title }}">
+              <h3>{{ product.title }}</h3>
+              <p>{{ product.price | money }}</p>
+            </a>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+</div>
+
+<script>  
+
+document.addEventListener('DOMContentLoaded', function() {
+  const productSwiper = new Swiper('.productSwiper', {
+    slidesPerView: 1,
+    spaceBetween: 10,
+    // Remove pagination or set to false to hide bullets
+    pagination: false,
+    // Or if you want to keep the element but hide it visually:
+    // pagination: {
+    //   el: '.swiper-pagination',
+    //   clickable: true,
+    //   hide: true // This will hide the bullets
+    // },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    breakpoints: {
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+      },
+      768: {
+        slidesPerView: 3,
+        spaceBetween: 30,
+      },
+      1024: {
+        slidesPerView: 4,
+        spaceBetween: 40,
+      },
+    }
+  });
+});
+
+
+</script>
+
+
+

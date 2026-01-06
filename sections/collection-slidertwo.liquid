@@ -1,0 +1,129 @@
+{% schema %}
+{
+  "name": "Collection Slider 2",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Slide Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Collection Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Collection Slider 2",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="collection-slider-wrapper page-width">
+  <div class="collection-slider-two swiper">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide">
+          <a href="{{ block.settings.link }}" class="slide-link">
+            <div class="slide-content">
+              <h3 class="slide-title">{{ block.settings.title }}</h3>
+              <img src="{{ block.settings.image | img_url: '720x' }}" alt="{{ block.settings.title }}">
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style> 
+.collection-slider-wrapper {
+  /* padding: 0 75px; */
+
+}
+.collection-slider-two .swiper-slide {
+  text-align: center;
+    overflow: hidden;
+}
+.slide-content {
+ display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    text-align: center;
+ 
+}
+  .slide-content img {
+transition: transform .5s ease;
+   
+}
+.slide-content:hover img {
+transform: scale(1.5);
+}
+  
+.slide-title {
+    order: -1;
+    margin: 0 0 10px 0;
+    font-size: 30px;
+    font-weight: 300;
+    color: #fff;
+    position: absolute;
+    left: 0;
+    right: 0;
+  bottom: 80px;
+  z-index: 9;
+  
+  
+}
+.collection-slider-two img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0;
+  margin: 0; /* Remove any default margins */
+}
+.slide-link {
+  text-decoration: none; /* Remove underline from link */
+  display: block;
+}
+
+  /* Mobile responsiveness */
+@media screen and (max-width: 768px) {
+ .slide-title { font-size: 20px;}
+   
+}
+</style>
+
+<script>
+new Swiper(".collection-slider-two", {
+  slidesPerView: 1,
+  spaceBetween: 25,
+  loop: true,
+  autoplay: {
+    delay: 3000,
+  },
+  breakpoints: {
+    380: {
+      slidesPerView: 1,
+    },
+    1024: {
+      slidesPerView: 3,
+    }
+  }
+});
+</script>

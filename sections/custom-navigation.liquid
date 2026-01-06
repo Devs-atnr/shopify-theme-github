@@ -1,0 +1,92 @@
+{%- comment -%}
+  Custom Navigation Section
+  
+{%- endcomment -%}
+
+{%- assign menu = section.settings.menu -%}
+
+<nav class="custom-navigation">
+  <ul class="custom-navigation__list">
+    {%- for link in linklists[menu].links -%}
+      <li class="custom-navigation__item">
+        <a href="{{ link.url }}" class="custom-navigation__link {% if link.active %}custom-navigation__link--active{% endif %}">
+          {{ link.title | upcase }}
+        </a>
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav>
+
+<style>
+  .custom-navigation {
+    background-color: #f8f8f8;
+    padding: 15px 0;
+    text-align: center;
+  }
+  
+  .custom-navigation__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+  
+  .custom-navigation__link {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+  }
+  
+  .custom-navigation__link:hover {
+    color: #000;
+  }
+  
+  .custom-navigation__link--active {
+    color: #000;
+    position: relative;
+  }
+  
+  .custom-navigation__link--active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #000;
+  }
+  
+  @media (max-width: 768px) {
+    .custom-navigation__list {
+      flex-direction: column;
+      gap: 15px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Custom Navigation",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Select Menu",
+      "default": "main-menu"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Navigation",
+      "category": "Navigation"
+    }
+  ]
+}
+{% endschema %}

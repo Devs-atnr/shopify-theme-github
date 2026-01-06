@@ -1,0 +1,129 @@
+{%- comment -%} snippets/advanced-search-modal.liquid {%- endcomment -%}
+<div id="AdvancedSearchOverlay" class="advanced-search__overlay" hidden>&nbsp;</div>
+<div id="AdvancedSearchModal" class="advanced-search__modal" hidden role="dialog" aria-modal="true" aria-labelledby="AdvancedSearchTitle">
+	<div class="advanced-search__card">
+		<div class="advanced-search__header">
+		<div class="advanced-search__header_block">
+					<button type="button" class="advanced-search__close" aria-label="{{ 'accessibility.close' | t }}" data-advanced-search-close>
+			Cancel
+		</button>
+			<form action="{{ routes.search_url }}" method="get" role="search" class="advanced-search__form" data-predictive-search>
+				<div class="advanced-search__input-wrapper">
+					<input type="search" name="q" placeholder="{{ 'general.search.search' | t }}" class="advanced-search__input" autofocus data-predictive-search-input>
+					<input type="hidden" name="type" value="product">
+					{% comment %} <button class="advanced-search__submit" type="submit">{{ 'general.search.submit' | t }}</button> {% endcomment %}
+				</div>
+			</form>
+
+			<div class="advanced-search__tabs" role="tablist" aria-label="Category tabs">
+				<button class="advanced-search__tab" role="tab" aria-selected="true" aria-controls="as-panel-all" id="as-tab-all" data-as-tab="all" data-as-scope="">All</button>
+				<button class="advanced-search__tab" role="tab" aria-selected="false" aria-controls="as-panel-women" id="as-tab-women" data-as-tab="women" data-as-scope="{{ settings.advanced_search_tag_women | escape }}">Women</button>
+				<button class="advanced-search__tab" role="tab" aria-selected="false" aria-controls="as-panel-men" id="as-tab-men" data-as-tab="men" data-as-scope="{{ settings.advanced_search_tag_men | escape }}">Men</button>
+			</div>
+		</div>
+		</div>
+
+		<div class="advanced-search__content">
+			<div class="advanced-search__header_block">
+			{%- assign trending_all = settings.advanced_search_trending_all | default: '' -%}
+			{%- assign trending_women = settings.advanced_search_trending_women | default: '' -%}
+			{%- assign trending_men = settings.advanced_search_trending_men | default: '' -%}
+
+			{%- assign list_all = trending_all | split: ',' -%}
+			{%- assign list_women = trending_women | split: ',' -%}
+			{%- assign list_men = trending_men | split: ',' -%}
+
+			{%- assign tag_women = settings.advanced_search_tag_women | strip -%}
+			{%- assign tag_men = settings.advanced_search_tag_men | strip -%}
+
+			<div class="advanced-search__trending-panels" data-trending-panels>
+				<section class="advanced-search__panel" id="as-panel-all" role="tabpanel" aria-labelledby="as-tab-all">
+					<h3 class="advanced-search__trending-title">TRENDING SEARCHES</h3>
+					<ul class="advanced-search__trending-list">
+						{%- for term in list_all -%}
+							{%- assign t = term | strip -%}
+							{%- if t != '' -%}
+								<li><a class="advanced-search__trending-chip" href="{{ routes.search_url }}?q={{ t | url_encode }}&type=product">
+									<span class="SuggestionTags_icon__UnRfX">
+										<img alt="TRENDING SEARCHES" loading="lazy" width="15" height="15" decoding="async" data-nimg="1" src="https://cdn.shopify.com/s/files/1/0680/2299/3110/files/tending-icon.svg?v=1756726285" style="color: transparent;"></span>
+									<span class="keyword_Text">{{ t }}</span></a></li>
+							{%- endif -%}
+						{%- endfor -%}
+					</ul>
+				</section>
+
+				<section class="advanced-search__panel" id="as-panel-women" role="tabpanel" aria-labelledby="as-tab-women" hidden>
+					<h3 class="advanced-search__trending-title">TRENDING SEARCHES</h3>
+					<ul class="advanced-search__trending-list">
+						{%- for term in list_women -%}
+							{%- assign t = term | strip -%}
+							{%- if t != '' -%}
+								{%- if tag_women != '' -%}
+									{%- assign tags_women = tag_women | split: ',' -%}
+									{%- assign tag_parts_women = '' -%}
+									{%- for tag in tags_women -%}
+										{%- assign clean_tag = tag | strip -%}
+										{%- if clean_tag != '' -%}
+											{%- if tag_parts_women != '' -%}
+												{%- assign tag_parts_women = tag_parts_women | append: ' OR ' -%}
+											{%- endif -%}
+											{%- assign tag_parts_women = tag_parts_women | append: 'tag:"' | append: clean_tag | append: '"' -%}
+										{%- endif -%}
+									{%- endfor -%}
+									{%- capture q_women -%}{{ t }} AND ({{ tag_parts_women }}){%- endcapture -%}
+								{%- else -%}
+									{%- assign q_women = t -%}
+								{%- endif -%}
+								<li><a class="advanced-search__trending-chip" href="{{ routes.search_url }}?q={{ q_women | url_encode }}&type=product">
+									<span class="SuggestionTags_icon__UnRfX">
+										<img alt="TRENDING SEARCHES" loading="lazy" width="15" height="15" decoding="async" data-nimg="1" src="https://cdn.shopify.com/s/files/1/0680/2299/3110/files/tending-icon.svg?v=1756726285" style="color: transparent;"></span>
+									<span class="keyword_Text">{{ t }}</span></a></li>
+							{%- endif -%}
+						{%- endfor -%}
+					</ul>
+				</section>
+
+				<section class="advanced-search__panel" id="as-panel-men" role="tabpanel" aria-labelledby="as-tab-men" hidden>
+					<h3 class="advanced-search__trending-title">TRENDING SEARCHES</h3>
+					<ul class="advanced-search__trending-list">
+						{%- for term in list_men -%}
+							{%- assign t = term | strip -%}
+							{%- if t != '' -%}
+								{%- if tag_men != '' -%}
+									{%- assign tags_men = tag_men | split: ',' -%}
+									{%- assign tag_parts_men = '' -%}
+									{%- for tag in tags_men -%}
+										{%- assign clean_tag = tag | strip -%}
+										{%- if clean_tag != '' -%}
+											{%- if tag_parts_men != '' -%}
+												{%- assign tag_parts_men = tag_parts_men | append: ' OR ' -%}
+											{%- endif -%}
+											{%- assign tag_parts_men = tag_parts_men | append: 'tag:"' | append: clean_tag | append: '"' -%}
+										{%- endif -%}
+									{%- endfor -%}
+									{%- capture q_men -%}{{ t }} AND ({{ tag_parts_men }}){%- endcapture -%}
+								{%- else -%}
+									{%- assign q_men = t -%}
+								{%- endif -%}
+								<li><a class="advanced-search__trending-chip" href="{{ routes.search_url }}?q={{ q_men | url_encode }}&type=product">
+									<span class="SuggestionTags_icon__UnRfX">
+										<img alt="TRENDING SEARCHES" loading="lazy" width="15" height="15" decoding="async" data-nimg="1" src="https://cdn.shopify.com/s/files/1/0680/2299/3110/files/tending-icon.svg?v=1756726285" style="color: transparent;"></span>
+									<span class="keyword_Text">{{ t }}</span></a></li>
+							{%- endif -%}
+						{%- endfor -%}
+					</ul>
+				</section>
+			</div>
+
+{%- comment -%} Predictive search results {%- endcomment -%}
+<div class="advanced-search__predictive" data-predictive-search-results hidden>
+	<div class="advanced-search__predictive-content">
+		<div class="advanced-search__predictive-products" data-predictive-search-products></div>
+		<div class="advanced-search__predictive-collections" data-predictive-search-collections></div>
+		<div class="advanced-search__predictive-vendors" data-predictive-search-vendors></div>
+	</div>
+</div>
+		</div>
+	</div>
+</div>
+</div>

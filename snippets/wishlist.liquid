@@ -1,0 +1,45 @@
+<button class="wishlisticon" id="wishlist-{{ product.handle }}" data-id="{{ product.handle }}">
+  <img src="https://cdn.shopify.com/s/files/1/0680/2299/3110/files/heart_empty.png?v=1746538479"  
+       class="wishlist-icon-img" id="wishlist-img-{{ product.handle }}" width="auto" height="auto">
+</button>
+
+<script>
+$(document).ready(function(){
+  const key = "wishHANDLE-{{ product.handle }}";
+  const button = $(`#wishlist-{{ product.handle }}`);
+
+  // Highlight icon if already in wishlist
+  if (localStorage.getItem(key)) {
+    button.addClass('wishfillID');
+  }
+
+  button.click(function() {
+    if (localStorage.getItem(key)) {
+      localStorage.removeItem(key);
+      button.removeClass('wishfillID');
+      showWishlistToast("Removed from wishlist...");
+    } else {
+      localStorage.setItem(key, '{{ product.handle }}');
+      button.addClass('wishfillID');
+      showWishlistToast("Product added to your wishlist 💛");
+    }
+
+    updateWishlistCount();
+  });
+});
+</script>
+
+<script>
+  function showWishlistToast(message = "Product added to your wishlist 💛") {
+    const toast = document.getElementById('wishlist-toast');
+    if (!toast) return; // Avoid error if toast element is missing
+
+    toast.textContent = message;
+    toast.style.display = 'block';
+    setTimeout(() => {
+      toast.style.display = 'none';
+    }, 2500);
+  }
+</script>
+
+

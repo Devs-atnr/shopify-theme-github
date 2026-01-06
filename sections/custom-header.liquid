@@ -1,0 +1,1410 @@
+{%- style -%}
+/* mega menu css */
+
+.hamburger-btn.active {
+    left: 265px;
+    bottom: 20px;
+}
+ul.mega-child {
+    text-align: left;
+}
+.mega-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+}
+
+.mega-link:hover {
+  text-decoration: none;
+}
+
+/* Child items with grandchildren + Parents with children */
+.mega-child li.has-grandchildren,
+.mega-parent li.has-children {
+  position: relative;
+  padding-right: 18px;
+}
+
+.mega-child li.has-grandchildren::after,
+.mega-parent li.has-children::after {
+  content: "›";
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: #a2732a;
+  font-size: 14px;
+  opacity: 0.7;
+  transition: 0.2s;
+}
+
+.mega-child li.has-grandchildren:hover::after,
+.mega-parent li.has-children:hover::after {
+  transform: translateX(3px);
+  opacity: 1;
+}
+
+.main-nav-mega {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  list-style: none;
+  margin: 0 0 10px;
+}
+.main-nav-item-mega > a {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 400;
+  color: #000;
+  padding: 10px 0;
+  display: inline-block;
+}
+.main-nav-item-mega.has-mega > a {
+  position: relative;
+}
+.main-nav-item-mega.has-mega > a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: #000;
+  transition: width .2s ease;
+}
+.main-nav-item-mega.has-mega:hover > a::after {
+  width: 100%;
+}
+
+.mega-menu-panel {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  background: #fff;
+  padding: 24px 40px 30px;
+  box-shadow: 0 15px 35px rgba(0,0,0,.08);
+  border-top: 1px solid #eee;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity .18s ease, transform .18s ease;
+  z-index: 40;
+}
+.mega-menu-panel.is-open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.mega-menu-shell {
+  position: relative;
+}
+
+.mega-columns {
+  display: grid;
+  grid-template-columns: 220px 220px 1fr;
+  gap: 40px;
+}
+
+.mega-parent,
+.mega-child,
+.mega-grandchild {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align:left;
+}
+
+.mega-parent li,
+.mega-child li {
+  cursor: pointer;
+  padding: 4px 0;
+  font-size: 13px;
+}
+
+.mega-parent li.is-active,
+.mega-child li.is-active {
+  font-weight: 600;
+  color: #000;
+}
+
+.mega-parent li:hover,
+.mega-child li:hover {
+  color: #a2732a;
+}
+
+.mega-grandchild li a {
+  display: block;
+  padding: 3px 0;
+  font-size: 13px;
+  text-decoration: none;
+  color: #444;
+}
+
+.mega-grandchild li a:hover {
+  color: #a2732a;
+}
+
+.mega-child,
+.mega-grandchild {
+  display: none;
+}
+.mega-child.is-active,
+.mega-grandchild.is-active {
+  display: block;
+}
+
+/* header layout css */
+.header__search { 
+  display: none; 
+}
+
+.header-search-form {
+  display: flex;
+  align-items: center;
+  border-radius: 0px;
+  padding: 0.25rem 0.5rem;
+  max-width: 300px;
+  background-color: #f9f9f9;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+              rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+.header-search-input {
+  flex-grow: 1;
+  border: none;
+  background: transparent;
+  padding: 0.5rem;
+  font-size: 1.3rem;
+  color: #555;
+  font-family: 'Nunito Sans';
+  font-weight: 400;
+}
+
+.header-search-input::placeholder {
+  color: #999;
+}
+
+.header-search-input:focus {
+  outline: none;
+}
+
+.header-search-button {
+  background: #000000;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  margin-left: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  width: 20px;
+  height: 20px;
+  fill: #fff;
+}
+
+.parentt {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.three {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.two {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.cus-header {
+  background-color: {{ section.settings.bg_color }};
+  color: {{ section.settings.text_color }};
+  text-align: center;
+  position: relative;
+}
+
+.announce-bar {
+  background-color: #A2732A;
+}
+
+.one {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.header-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.header-item a {
+  text-transform: capitalize;
+  font-weight: 400;
+  color: #000 !important;
+  font-size: 13px;
+}
+
+.header-item .icon {
+  color: #a16c2f;
+  display: flex;
+}
+
+.header__title {
+  font-size: 13px;
+  text-transform: uppercase;
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
+  padding: 1.3rem 10px;
+  color: #fff;
+}
+
+/* ==================================== */
+/* MOBILE HAMBURGER MENU CSS - FIXED */
+/* ==================================== */
+
+/* Hamburger Button */
+.hamburger-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 1001;
+  position: relative;
+  margin-right: 15px;
+}
+
+.hamburger-btn span {
+  display: block;
+  width: 25px;
+  height: 2px;
+  background: #000;
+  margin: 5px 0;
+  transition: 0.3s;
+  border-radius: 2px;
+}
+
+.hamburger-btn.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger-btn.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-btn.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Mobile Drawer */
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 85%;
+  max-width: 350px;
+  height: 100%;
+  background: #fff;
+  z-index: 1000;
+  transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  box-shadow: 2px 0 20px rgba(0,0,0,0.15);
+}
+
+.mobile-drawer.active {
+  left: 0;
+}
+
+/* Drawer Overlay */
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.drawer-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Menu Levels */
+.mobile-menu-level {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+}
+
+.mobile-menu-level[data-level="0"] {
+  transform: translateX(0);
+}
+
+.mobile-menu-level[data-level="1"] {
+  transform: translateX(100%);
+}
+
+.mobile-menu-level[data-level="2"] {
+  transform: translateX(200%);
+}
+
+.mobile-menu-level[data-level="3"] {
+  transform: translateX(300%);
+}
+
+.mobile-menu-level.active {
+  transform: translateX(0) !important;
+}
+
+/* Menu Header */
+.menu-header {
+  display: flex;
+  align-items: center;
+  padding: 20px 15px;
+  background: #f9f9f9;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #a2732a;
+  padding: 5px 10px;
+  font-weight: 500;
+}
+
+.menu-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 auto;
+  color: #000;
+  text-transform: uppercase;
+}
+
+/* Menu Content */
+.menu-content {
+  padding: 15px;
+}
+
+/* Menu Lists */
+.mobile-menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mobile-menu-item {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.mobile-menu-item:last-child {
+  border-bottom: none;
+}
+
+.mobile-menu-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  text-decoration: none;
+  color: #333;
+  font-size: 15px;
+  font-weight: 400;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.mobile-menu-link .arrow {
+  font-size: 18px;
+  color: #a2732a;
+  opacity: 0.8;
+}
+
+.mobile-menu-link:hover {
+  color: #a2732a;
+}
+
+/* Level Indicators */
+.level-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 15px 0;
+  padding: 0 15px;
+}
+
+.level-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ddd;
+  transition: background 0.3s;
+}
+
+.level-dot.active {
+  background: #a2732a;
+  transform: scale(1.2);
+}
+
+/* Responsive */
+@media (max-width: 1199px) {
+  .main-nav-mega {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 991px) {
+  /* Hide desktop mega menu on mobile */
+  .mega-menu-shell {
+    display: none !important;
+  }
+  
+  /* Show hamburger button */
+  .hamburger-btn {
+    display: block;
+  }
+  
+  /* Adjust header layout for mobile */
+  .parentt {
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    padding: 10px 0;
+    gap: 10px;
+  }
+  
+  .one {
+    order: 1;
+    justify-content: flex-start;
+  }
+  
+  .two {
+    order: 2;
+    padding-bottom: 0;
+    text-align: center;
+  }
+  
+  .three {
+    order: 3;
+    justify-content: flex-end;
+  }
+  
+  .header-item.desktop-only {
+    display: none !important;
+  }
+  
+  .header-item.mobile-only {
+    display: flex !important;
+  }
+  
+  .header__search {
+    display: none !important;
+  }
+  
+  button.header__search-opener {
+    display: none;
+  }
+  
+  .announce-bar {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .cus-header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .header__title {
+    font-size: 12px;
+    padding: 1rem 10px;
+  }
+  
+  .mobile-drawer {
+    width: 85%;
+  }
+}
+
+@media (max-width: 480px) {
+  .mobile-drawer {
+    width: 90%;
+  }
+  
+  .menu-header {
+    padding: 15px 10px;
+  }
+  
+  .menu-content {
+    padding: 10px;
+  }
+  
+  .mobile-menu-link {
+    padding: 14px 0;
+    font-size: 14px;
+  }
+}
+/* header layout css end*/
+{%- endstyle -%}
+
+<header class="cus-header">
+  <div class="page-width">
+    <div class="parentt">
+
+      <!-- LEFT SECTION -->
+      <div class="one">
+        <!-- Mobile Hamburger Button -->
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Open menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <!-- ACCOUNT (Desktop Only) -->
+        <div class="header-item desktop-only">
+          <span class="icon">
+            <img src="https://cdn.shopify.com/s/files/1/0680/2299/3110/files/people.png?v=1748337302" width="20" height="auto" alt="Account">
+          </span>
+          {% if customer %}
+            <a href="/account">Account</a>
+          {% else %}
+            <a href="/account/login">Account</a>
+          {% endif %}
+        </div>
+
+        <!-- WISHLIST (Desktop Only) -->
+        <div class="header-item desktop-only">
+          <span class="svg-wrapper">{{ 'free_icon-heart.svg' | inline_asset_content }}</span>
+          <a href="/pages/my-wishlist">
+            Wishlist (<span id="wishlist-count">0</span>)
+          </a>
+        </div>
+
+        <!-- CART (Desktop Only) -->
+        <div class="header-item desktop-only">
+          <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
+            <span class="svg-wrapper">{{ 'free_icon_1.svg' | inline_asset_content }}</span>
+            <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+            Bag
+            <div class="botu">
+              {% if cart.item_count < 100 %}
+                (<span aria-hidden="true">{{ cart.item_count }}</span>)
+              {% endif %}
+              <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- CENTER LOGO -->
+      <div class="two">
+        {% if section.settings.logo_image != blank %}
+          <a href="{{ routes.root_url }}">
+            <img 
+              src="{{ section.settings.logo_image | image_url: width: section.settings.logo_width }}"
+              alt="Logo"
+              width="{{ section.settings.logo_width }}"
+              loading="lazy"
+            >
+          </a>
+        {% else %}
+          <h2>Logo</h2>
+        {% endif %}
+      </div>
+
+      <!-- RIGHT SECTION -->
+      <div class="three">
+        <!-- CART Icon for Mobile Only -->
+        <div class="header-item mobile-only" style="display: none;">
+          <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset">
+            <span class="svg-wrapper">{{ 'free_icon_1.svg' | inline_asset_content }}</span>
+            <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+            <div class="botu">
+              {% if cart.item_count < 100 %}
+                <span aria-hidden="true">{{ cart.item_count }}</span>
+              {% endif %}
+            </div>
+          </a>
+        </div>
+
+        {% render 'header-search' %}
+
+        <!-- Search Button -->
+        <button 
+          type="button"
+          class="header__search-opener"
+          data-advanced-search-open
+          aria-haspopup="dialog"
+          aria-label="{{ 'general.search.search' | t }}"
+        >
+          <span 
+            class="header__search-opener-field"
+            data-typing='["Jewellery","T-shirt","Jeans","Sneakers","Bags"]'
+            data-prefix="Search For"
+          >
+            <span class="header__search-opener-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5
+                  6.5 6.5 0 1 0 9.5 16a6.471 6.471 0 0 0 4.23-1.57l.27.28v.79l5
+                  4.99L20.49 19l-4.99-5zm-6 0C8.01 14 6 11.99 6
+                  9.5S8.01 5 10.5 5 15 7.01 15 9.5 12.99 14 10.5 14z"/>
+              </svg>
+            </span>
+
+            <input 
+              type="search"
+              class="header__search-opener-input"
+              placeholder="Search For"
+              readonly
+              aria-hidden="true"
+            />
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Desktop Mega Menu code {%- endcomment -%}
+  {% assign main_menu = section.settings.main_menu %}
+
+  {% if main_menu != blank and main_menu.links.size > 0 %}
+  <div class="mega-menu-shell">
+    <ul class="main-nav-mega">
+      {% for link in main_menu.links %}
+        {%- assign matched_block = nil -%}
+        {% for block in section.blocks %}
+          {%- assign block_title = block.settings.trigger_title | strip | downcase -%}
+          {%- assign link_title  = link.title | strip | downcase -%}
+          {% if block.type == 'mega_block' and block_title == link_title %}
+            {% assign matched_block = block %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+
+        <li class="main-nav-item-mega {% if matched_block %}has-mega{% endif %}">
+          <a href="{{ link.url }}">{{ link.title }}</a>
+
+          {% if matched_block and matched_block.settings.mega_menu_handle != blank %}
+            {% assign menu = matched_block.settings.mega_menu_handle %}
+            {% if menu.links.size > 0 %}
+              <div class="mega-menu-panel">
+                <div class="mega-columns">
+                  <!-- LEFT COLUMN : PARENTS -->
+                  <ul class="mega-parent">
+                    {% for parent in menu.links %}
+                      <li 
+                        class="
+                          {% if forloop.first %}is-active{% endif %}
+                          {% if parent.links.size > 0 %} has-children{% endif %}
+                        "
+                        data-parent="{{ forloop.index0 }}"
+                      >
+                        <a href="{{ parent.url }}" class="mega-link">{{ parent.title }}</a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+
+                  <!-- MIDDLE COLUMN : CHILDREN -->
+                  <div class="mega-child-wrapper">
+                    {% for parent in menu.links %}
+                      <ul class="mega-child {% if forloop.first %}is-active{% endif %}"
+                          data-parent="{{ forloop.index0 }}">
+                        {% for child in parent.links %}
+                          <li class="{% if forloop.parentloop.first and forloop.first %}is-active{% endif %} {% if child.links.size > 0 %}has-grandchildren{% endif %}"
+                              data-parent="{{ forloop.parentloop.index0 }}"
+                              data-child="{{ forloop.index0 }}">
+                            <a href="{{ child.url }}" class="mega-link">{{ child.title }}</a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    {% endfor %}
+                  </div>
+
+                  <!-- RIGHT COLUMN : SUB-CHILDREN -->
+                  <div class="mega-grandchild-wrapper">
+                    {% for parent in menu.links %}
+                      {% for child in parent.links %}
+                        <ul class="mega-grandchild
+                            {% if forloop.parentloop.first and forloop.first %}is-active{% endif %}"
+                            data-parent="{{ forloop.parentloop.index0 }}"
+                            data-child="{{ forloop.index0 }}">
+                          {% for sub in child.links %}
+                            <li><a href="{{ sub.url }}">{{ sub.title }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      {% endfor %}
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <div class="announce-bar desktop-only">
+    <h1 class="header__title">{{ section.settings.title }}</h1>
+  </div>
+</header>
+
+<!-- Mobile Drawer Overlay -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
+
+<!-- Mobile Drawer -->
+<div class="mobile-drawer" id="mobile-drawer">
+  <!-- Content will be loaded dynamically -->
+</div>
+
+<!-- Level Indicators -->
+<div class="level-indicators" id="level-indicators" style="display: none;">
+  <span class="level-dot active" data-level="0"></span>
+  <span class="level-dot" data-level="1"></span>
+  <span class="level-dot" data-level="2"></span>
+  <span class="level-dot" data-level="3"></span>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "main_menu",
+      "label": "Main Navigation Menu"
+    },
+    {
+      "type": "header",
+      "content": "Mega Menu Blocks"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Upload Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Logo Width (px)",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "default": 150
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Header Title",
+      "default": "NATURE'S ARTISTRY CAPTURED IN RADIANT DIAMONDS"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000000"
+    }
+  ],
+
+  "blocks": [
+    {
+      "type": "mega_block",
+      "name": "Mega Menu Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "trigger_title",
+          "label": "Top Menu Title (Must match main menu title)"
+        },
+        {
+          "type": "link_list",
+          "id": "mega_menu_handle",
+          "label": "Select 3-Level Mega Menu"
+        }
+      ]
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "Custom Header",
+      "category": "Header"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+// =============================================
+// MOBILE HAMBURGER MENU JS - COMPLETE & WORKING
+// =============================================
+document.addEventListener('DOMContentLoaded', function() {
+  
+  // ========== ELEMENTS ==========
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const mobileDrawer = document.getElementById('mobile-drawer');
+  const drawerOverlay = document.getElementById('drawer-overlay');
+  const levelIndicators = document.getElementById('level-indicators');
+  
+  if (!hamburgerBtn || !mobileDrawer) {
+    console.error('Required elements not found');
+    return;
+  }
+  
+  console.log('Mobile menu script loaded');
+  
+  // ========== STATE VARIABLES ==========
+  let currentLevel = 0;
+  const menuHistory = [];
+  const megaMenuData = {};
+  
+  // ========== INITIALIZE ==========
+  initializeMobileMenu();
+  
+  // ========== MAIN FUNCTIONS ==========
+  function initializeMobileMenu() {
+    // Collect mega menu data
+    collectMegaMenuData();
+    
+    // Setup event listeners
+    setupEventListeners();
+    
+    console.log('Mobile menu initialized');
+  }
+  
+  function collectMegaMenuData() {
+    const megaItems = document.querySelectorAll('.main-nav-item-mega.has-mega');
+    
+    megaItems.forEach((item) => {
+      const link = item.querySelector('a');
+      const menuTitle = link?.textContent.trim();
+      const megaPanel = item.querySelector('.mega-menu-panel');
+      
+      if (menuTitle && megaPanel) {
+        const parents = [];
+        const parentElements = megaPanel.querySelectorAll('.mega-parent li');
+        
+        parentElements.forEach((parentLi, parentIndex) => {
+          const parentLink = parentLi.querySelector('.mega-link');
+          const parentTitle = parentLink?.textContent.trim();
+          const parentUrl = parentLink?.href;
+          const hasChildren = parentLi.classList.contains('has-children');
+          
+          // Get children for this parent
+          const children = [];
+          const childList = megaPanel.querySelector(`.mega-child[data-parent="${parentIndex}"]`);
+          
+          if (childList) {
+            childList.querySelectorAll('li').forEach((childLi, childIndex) => {
+              const childLink = childLi.querySelector('.mega-link');
+              const childTitle = childLink?.textContent.trim();
+              const childUrl = childLink?.href;
+              const hasGrandchildren = childLi.classList.contains('has-grandchildren');
+              
+              // Get grandchildren for this child
+              const grandchildren = [];
+              const grandchildList = megaPanel.querySelector(
+                `.mega-grandchild[data-parent="${parentIndex}"][data-child="${childIndex}"]`
+              );
+              
+              if (grandchildList) {
+                grandchildList.querySelectorAll('li a').forEach(grandLink => {
+                  grandchildren.push({
+                    title: grandLink.textContent.trim(),
+                    url: grandLink.href
+                  });
+                });
+              }
+              
+              children.push({
+                title: childTitle,
+                url: childUrl,
+                hasChildren: hasGrandchildren,
+                grandchildren: grandchildren
+              });
+            });
+          }
+          
+          parents.push({
+            title: parentTitle,
+            url: parentUrl,
+            hasChildren: hasChildren,
+            children: children
+          });
+        });
+        
+        megaMenuData[menuTitle] = {
+          title: menuTitle,
+          parents: parents
+        };
+      }
+    });
+    
+    console.log('Mega menu data collected:', Object.keys(megaMenuData));
+  }
+  
+  function setupEventListeners() {
+    // Hamburger button
+    hamburgerBtn.addEventListener('click', toggleDrawer);
+    
+    // Overlay close
+    drawerOverlay.addEventListener('click', closeDrawer);
+    
+    // Escape key close
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && mobileDrawer.classList.contains('active')) {
+        closeDrawer();
+      }
+    });
+    
+    // Prevent body scroll when drawer is open
+    document.addEventListener('touchmove', function(e) {
+      if (mobileDrawer.classList.contains('active')) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+  }
+  
+  // ========== DRAWER FUNCTIONS ==========
+  function toggleDrawer() {
+    if (mobileDrawer.classList.contains('active')) {
+      closeDrawer();
+    } else {
+      openDrawer();
+    }
+  }
+  
+  function openDrawer() {
+    hamburgerBtn.classList.add('active');
+    mobileDrawer.classList.add('active');
+    drawerOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Load main menu
+    loadMainMenu();
+  }
+  
+  function closeDrawer() {
+    hamburgerBtn.classList.remove('active');
+    mobileDrawer.classList.remove('active');
+    drawerOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+    
+    // Reset state
+    currentLevel = 0;
+    menuHistory.length = 0;
+    updateLevelIndicators(0);
+  }
+  
+  // ========== MENU NAVIGATION ==========
+  function loadMainMenu() {
+    currentLevel = 0;
+    menuHistory.length = 0;
+    
+    const mainMenuLinks = document.querySelectorAll('.main-nav-mega .main-nav-item-mega > a');
+    let menuHTML = '';
+    
+    if (mainMenuLinks.length === 0) {
+      menuHTML = '<p style="padding: 20px; text-align: center;">No menu items found</p>';
+    } else {
+      menuHTML = '<ul class="mobile-menu-list">';
+      
+      mainMenuLinks.forEach((link) => {
+        const title = link.textContent.trim();
+        const url = link.href;
+        const hasMega = link.closest('.main-nav-item-mega').classList.contains('has-mega');
+        
+        menuHTML += `
+          <li class="mobile-menu-item">
+            <button class="mobile-menu-link ${hasMega ? 'has-children' : ''}" 
+                    data-title="${title}"
+                    data-has-mega="${hasMega}"
+                    ${!hasMega ? `onclick="window.location.href='${url}'"` : ''}>
+              ${title}
+              ${hasMega ? '<span class="arrow">›</span>' : ''}
+            </button>
+          </li>
+        `;
+      });
+      
+      menuHTML += '</ul>';
+    }
+    
+    showLevel(0, 'Menu', menuHTML);
+    updateLevelIndicators(0);
+    
+    // Add event listeners for mega menu items
+    setTimeout(() => {
+      document.querySelectorAll('.mobile-menu-link.has-children').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const title = this.getAttribute('data-title');
+          navigateToLevel(1, title);
+        });
+      });
+    }, 50);
+  }
+  
+  function navigateToLevel(level, title, parentIndex = null, childIndex = null) {
+    console.log(`Navigate to level ${level}: ${title}`);
+    
+    // Add to history if moving forward
+    if (level > currentLevel) {
+      menuHistory.push({
+        level: currentLevel,
+        title: getCurrentTitle(),
+        parentIndex: parentIndex,
+        childIndex: childIndex
+      });
+    }
+    
+    // Hide current level
+    const currentLevelEl = document.getElementById(`level-${currentLevel}`);
+    if (currentLevelEl) {
+      currentLevelEl.classList.remove('active');
+    }
+    
+    // Generate content for new level
+    let content = '';
+    let backTitle = 'Back';
+    
+    if (level === 1) {
+      // Level 1: Mega menu parents
+      const megaData = megaMenuData[title];
+      if (!megaData) {
+        console.error('No mega data found for:', title);
+        return;
+      }
+      
+      content = '<ul class="mobile-menu-list">';
+      
+      megaData.parents.forEach((parent, index) => {
+        content += `
+          <li class="mobile-menu-item">
+            <button class="mobile-menu-link ${parent.hasChildren ? 'has-children' : ''}" 
+                    data-parent-index="${index}"
+                    data-menu-title="${title}"
+                    ${!parent.hasChildren ? `onclick="window.location.href='${parent.url || '#'}'"` : ''}>
+              ${parent.title || 'Untitled'}
+              ${parent.hasChildren ? '<span class="arrow">›</span>' : ''}
+            </button>
+          </li>
+        `;
+      });
+      
+      content += '</ul>';
+      backTitle = 'Menu';
+      
+    } else if (level === 2 && parentIndex !== null) {
+      // Level 2: Children
+      const megaData = megaMenuData[title];
+      if (!megaData || !megaData.parents[parentIndex]) return;
+      
+      const parent = megaData.parents[parentIndex];
+      content = '<ul class="mobile-menu-list">';
+      
+      parent.children.forEach((child, index) => {
+        content += `
+          <li class="mobile-menu-item">
+            <button class="mobile-menu-link ${child.hasChildren ? 'has-children' : ''}" 
+                    data-child-index="${index}"
+                    data-parent-index="${parentIndex}"
+                    data-menu-title="${title}"
+                    ${!child.hasChildren ? `onclick="window.location.href='${child.url || '#'}'"` : ''}>
+              ${child.title || 'Untitled'}
+              ${child.hasChildren ? '<span class="arrow">›</span>' : ''}
+            </button>
+          </li>
+        `;
+      });
+      
+      content += '</ul>';
+      backTitle = title;
+      
+    } else if (level === 3 && parentIndex !== null && childIndex !== null) {
+      // Level 3: Grandchildren
+      const megaData = megaMenuData[title];
+      if (!megaData || !megaData.parents[parentIndex]) return;
+      
+      const parent = megaData.parents[parentIndex];
+      const child = parent.children[childIndex];
+      if (!child) return;
+      
+      content = '<ul class="mobile-menu-list">';
+      
+      child.grandchildren.forEach((grandchild, index) => {
+        content += `
+          <li class="mobile-menu-item">
+            <a href="${grandchild.url || '#'}" class="mobile-menu-link">
+              ${grandchild.title || 'Untitled'}
+            </a>
+          </li>
+        `;
+      });
+      
+      content += '</ul>';
+      backTitle = parent.title || 'Back';
+    }
+    
+    // Show new level
+    showLevel(level, title, content, backTitle);
+    currentLevel = level;
+    updateLevelIndicators(level);
+    
+    // Add event listeners for new level
+    setTimeout(() => {
+      const newLevelEl = document.getElementById(`level-${level}`);
+      if (newLevelEl) {
+        // Level 1: Parent items
+        newLevelEl.querySelectorAll('[data-parent-index]').forEach(item => {
+          item.addEventListener('click', function(e) {
+            if (this.classList.contains('has-children')) {
+              e.preventDefault();
+              const parentIdx = parseInt(this.getAttribute('data-parent-index'));
+              const menuTitle = this.getAttribute('data-menu-title');
+              navigateToLevel(2, menuTitle, parentIdx);
+            }
+          });
+        });
+        
+        // Level 2: Child items
+        newLevelEl.querySelectorAll('[data-child-index]').forEach(item => {
+          item.addEventListener('click', function(e) {
+            if (this.classList.contains('has-children')) {
+              e.preventDefault();
+              const childIdx = parseInt(this.getAttribute('data-child-index'));
+              const parentIdx = parseInt(this.getAttribute('data-parent-index'));
+              const menuTitle = this.getAttribute('data-menu-title');
+              navigateToLevel(3, menuTitle, parentIdx, childIdx);
+            }
+          });
+        });
+      }
+    }, 50);
+  }
+  
+  function showLevel(level, title, content, backTitle = 'Back') {
+    // Remove existing level if any
+    const existingLevel = document.getElementById(`level-${level}`);
+    if (existingLevel) {
+      existingLevel.remove();
+    }
+    
+    // Create new level
+    const levelEl = document.createElement('div');
+    levelEl.className = 'mobile-menu-level';
+    levelEl.id = `level-${level}`;
+    levelEl.setAttribute('data-level', level);
+    
+    levelEl.innerHTML = `
+      <div class="menu-header">
+        <button class="back-btn" onclick="goBack(${level})">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          ${backTitle}
+        </button>
+        <h3 class="menu-title">${title}</h3>
+      </div>
+      <div class="menu-content">
+        ${content}
+      </div>
+    `;
+    
+    // Add to drawer
+    mobileDrawer.appendChild(levelEl);
+    
+    // Make it active
+    levelEl.classList.add('active');
+  }
+  
+  // ========== BACK NAVIGATION ==========
+  window.goBack = function(fromLevel) {
+    console.log(`goBack called from level ${fromLevel}`);
+    console.log('History:', menuHistory);
+    
+    if (fromLevel === 0) {
+      closeDrawer();
+      return;
+    }
+    
+    // Get previous state
+    const prevState = menuHistory.pop();
+    
+    if (!prevState) {
+      // No history, go to main menu
+      loadMainMenu();
+      return;
+    }
+    
+    // Hide current level
+    const currentLevelEl = document.getElementById(`level-${fromLevel}`);
+    if (currentLevelEl) {
+      currentLevelEl.classList.remove('active');
+    }
+    
+    // Show previous level
+    if (prevState.level === 0) {
+      loadMainMenu();
+    } else if (prevState.level === 1) {
+      navigateToLevel(1, prevState.title);
+    } else if (prevState.level === 2) {
+      navigateToLevel(2, prevState.title, prevState.parentIndex);
+    }
+  };
+  
+  // ========== HELPER FUNCTIONS ==========
+  function getCurrentTitle() {
+    const currentLevelEl = document.getElementById(`level-${currentLevel}`);
+    if (currentLevelEl) {
+      const titleEl = currentLevelEl.querySelector('.menu-title');
+      return titleEl ? titleEl.textContent : '';
+    }
+    return '';
+  }
+  
+  function updateLevelIndicators(level) {
+    if (!levelIndicators) return;
+    
+    if (level > 0) {
+      levelIndicators.style.display = 'flex';
+      levelIndicators.querySelectorAll('.level-dot').forEach((dot, index) => {
+        dot.classList.toggle('active', index === level);
+      });
+    } else {
+      levelIndicators.style.display = 'none';
+    }
+  }
+  
+  // ========== DESKTOP MEGA MENU JS (KEEP EXISTING) ==========
+  // Your existing desktop mega menu JavaScript code here
+  // Don't remove this if you have existing functionality
+  
+});
+
+// Desktop Mega Menu JS (Add your existing code here if any)
+document.addEventListener('DOMContentLoaded', function () {
+  // TOP NAV HOVER → OPEN PANEL
+  document.querySelectorAll('.main-nav-item-mega.has-mega').forEach(function(item) {
+    const panel = item.querySelector('.mega-menu-panel');
+    if (!panel) return;
+
+    item.addEventListener('mouseenter', () => {
+      document.querySelectorAll('.mega-menu-panel').forEach(p => p.classList.remove('is-open'));
+      panel.classList.add('is-open');
+    });
+
+    item.addEventListener('mouseleave', () => {
+      panel.classList.remove('is-open');
+    });
+  });
+
+  // PARENT → CHILD
+  document.querySelectorAll('.mega-parent li').forEach(function(parentLi) {
+    parentLi.addEventListener('mouseenter', function () {
+      let parentIndex = parentLi.getAttribute('data-parent');
+      let panel = parentLi.closest('.mega-menu-panel');
+
+      panel.querySelectorAll('.mega-parent li').forEach(li => li.classList.remove('is-active'));
+      parentLi.classList.add('is-active');
+
+      panel.querySelectorAll('.mega-child').forEach(ul => {
+        ul.classList.toggle('is-active', ul.getAttribute('data-parent') === parentIndex);
+      });
+
+      let firstChild = panel.querySelector('.mega-child[data-parent="' + parentIndex + '"] li');
+      panel.querySelectorAll('.mega-child li').forEach(li => li.classList.remove('is-active'));
+
+      if (firstChild) {
+        firstChild.classList.add('is-active');
+        let childIndex = firstChild.getAttribute('data-child');
+
+        panel.querySelectorAll('.mega-grandchild').forEach(ul => {
+          ul.classList.toggle(
+            'is-active',
+            ul.getAttribute('data-parent') === parentIndex &&
+            ul.getAttribute('data-child') === childIndex
+          );
+        });
+      } else {
+        panel.querySelectorAll('.mega-grandchild').forEach(ul => ul.classList.remove('is-active'));
+      }
+    });
+  });
+
+  // CHILD → GRANDCHILD
+  document.querySelectorAll('.mega-child li').forEach(function(childLi) {
+    childLi.addEventListener('mouseenter', function () {
+      let parentIndex = childLi.getAttribute('data-parent');
+      let childIndex = childLi.getAttribute('data-child');
+      let panel = childLi.closest('.mega-menu-panel');
+
+      panel.querySelectorAll('.mega-child li').forEach(li => li.classList.remove('is-active'));
+      childLi.classList.add('is-active');
+
+      panel.querySelectorAll('.mega-grandchild').forEach(ul => {
+        ul.classList.toggle(
+          'is-active',
+          ul.getAttribute('data-parent') === parentIndex &&
+          ul.getAttribute('data-child') === childIndex
+        );
+      });
+    });
+  });
+});
+</script>
+
+<div id="wishlist-toast" style="
+  display: none;
+  height: 50px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #222;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 0px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  z-index: 9999;
+  font-size: 14px;">
+</div>

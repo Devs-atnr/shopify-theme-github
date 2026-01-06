@@ -1,0 +1,11 @@
+<span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
+
+<span class="vn">Bag ({{ cart.item_count }})</span>
+{%- if cart != empty -%}
+  <span class="cart-count-bubble">
+    {%- if cart.item_count < 100 -%}
+   <!-- <span aria-hidden="true">Bag ({{ cart.item_count }})</span> -->
+    {%- endif -%}
+   <!-- <span class="visually-hidden">Bag {{ 'sections.header.cart_count' | t: count: cart.item_count }} -->
+  </span>
+{%- endif -%}

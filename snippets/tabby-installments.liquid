@@ -1,0 +1,54 @@
+{%- assign lang = localization.language.iso_code -%}
+{%- assign currency = cart.currency.iso_code -%}
+<div id="TabbyPromo"></div>
+<script>
+  (function () {
+    const productData = {{ product | json }};
+    const currency = '{{ currency }}';
+    const lang = '{{ lang }}';
+    const publicKey = 'pk_bd9cd87f-a7ea-472d-8fb1-36bb853a4fa8';
+    function getSelectedVariantPrice() {
+      const variantId = document.querySelector('[name="id"]')?.value;
+      if (!variantId) return null;
+      const variant = productData.variants.find(v => v.id == variantId);
+      if (!variant) return null;
+      return variant.price / 100.0;
+    }
+    function refreshTabby() {
+      const price = getSelectedVariantPrice();
+      if (!price) return;
+      const promo = document.getElementById('TabbyPromo');
+      if (promo) promo.innerHTML = '';
+      const merchantCode = (currency === 'SAR') ? 'default' :
+                           (currency === 'SAR') ? 'ksa' :
+                           (currency === 'KWD') ? 'KW' : undefined;
+      const config = {
+        selector: '#TabbyPromo',
+        currency,
+        price,
+        lang,
+        publicKey
+      };
+      if (merchantCode) config.merchantCode = merchantCode;
+      new TabbyPromo(config);
+    }
+    const script = document.createElement('script');
+    script.src = 'https://checkout.tabby.ai/tabby-promo.js';
+    script.async = true;
+    script.onload = () => {
+      refreshTabby();
+      const variantSelector = document.querySelector('form[action*="/cart/add"] select');
+      if (variantSelector) {
+        variantSelector.addEventListener('change', refreshTabby);
+      }
+      const variantInput = document.querySelector('input[name="id"]');
+      if (variantInput) {
+        const observer = new MutationObserver(() => {
+          refreshTabby();
+        });
+        observer.observe(variantInput, { attributes: true, attributeFilter: ['value'] });
+      }
+    };
+    document.body.appendChild(script);
+  })();
+</script>

@@ -1,0 +1,116 @@
+
+
+{% comment %} 
+  NAVIGATON LOOP 
+{% endcomment %}
+
+<nav class="header-navmob" role="navigation">
+  <ul class="site-nav">
+    {% for link in section.settings.menu.links %}
+      {% assign link_handle = link.title | handleize %}
+      {% assign has_mega_menu = false %}
+      
+      {% comment %} Check if this parent link has associated blocks {% endcomment %}
+      {% for block in section.blocks %}
+        {% assign trigger_handle = block.settings.parent_trigger | handleize %}
+        {% if trigger_handle == link_handle %}
+          {% assign has_mega_menu = true %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+
+      <li class="site-nav__item {% if has_mega_menu %}has-mega-menu{% endif %}">
+    <div class="site-nav__link-wrapper" style="display:flex; align-items:center;">
+  <a href="{{ link.url }}" class="site-nav__link">
+    {{ link.title }}
+    {% if has_mega_menu %}
+       <span class="icon-dropdown"><img src="https://cdn.shopify.com/s/files/1/0680/2299/3110/files/angle-down.png?v=1764248750"> </span>
+    {% endif %}
+  </a>
+  
+  {% if has_mega_menu %}
+    <span class="mobile-menu-toggleo" data-target="mega-menu-{{ link_handle }}">+</span>
+  {% endif %}
+</div>
+
+        {% if has_mega_menu %}
+          <div id="mega-menu-{{ link_handle }}" class="mega-menu-container">
+            <div class="mega-menu-wrapper">
+              
+              <div class="mm-sidebar">
+                {% assign first_item = true %}
+                {% for block in section.blocks %}
+                  {% assign trigger_handle = block.settings.parent_trigger | handleize %}
+                  {% if trigger_handle == link_handle %}
+                    <div class="mm-sidebar-item {% if first_item %}active{% endif %}" data-target="block-{{ block.id }}">
+                      <a href="{{ block.settings.child_url }}">{{ block.settings.child_title }}</a>
+                      <span class="arrow">&rarr;</span>
+                      <span class="mm-toggle-icon">
+          {% if first_item %}−{% else %}+{% endif %}
+        </span>
+                    </div>
+                    {% assign first_item = false %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+
+              <div class="mm-content-area">
+                {% assign first_content = true %}
+                {% for block in section.blocks %}
+                  {% assign trigger_handle = block.settings.parent_trigger | handleize %}
+                  {% if trigger_handle == link_handle %}
+                    
+                    <div id="block-{{ block.id }}" class="mm-content-panel {% if first_content %}active{% endif %}">
+                      <div class="mm-grid-4-col">
+                        
+                        <div class="mm-col">
+                          <h5><a href="{{ block.settings.col_1_url }}"> {{ block.settings.col_1_title }} </a></h5>
+                          <ul>
+                            {% for sublink in linklists[block.settings.col_1_menu].links %}
+                              <li><a href="{{ sublink.url }}">{{ sublink.title }}</a></li>
+                            {% endfor %}
+                          </ul>
+                        </div>
+
+                        <div class="mm-col">
+                          <h5><a href="{{ block.settings.col_2_url }}">{{ block.settings.col_2_title }}</a></h5>
+                          <ul>
+                            {% for sublink in linklists[block.settings.col_2_menu].links %}
+                              <li><a href="{{ sublink.url }}">{{ sublink.title }}</a></li>
+                            {% endfor %}
+                          </ul>
+                        </div>
+
+                        <div class="mm-col">
+                          <h5><a href="{{ block.settings.col_3_url }}">{{ block.settings.col_3_title }}</a></h5>
+                          <ul>
+                            {% for sublink in linklists[block.settings.col_3_menu].links %}
+                              <li><a href="{{ sublink.url }}">{{ sublink.title }}</a></li>
+                            {% endfor %}
+                          </ul>
+                        </div>
+
+                        <div class="mm-col">
+                          <h5><a href="{{ block.settings.col_4_url }}">{{ block.settings.col_4_title }}</a></h5>
+                          <ul>
+                            {% for sublink in linklists[block.settings.col_4_menu].links %}
+                              <li><a href="{{ sublink.url }}">{{ sublink.title }}</a></li>
+                            {% endfor %}
+                          </ul>
+                        </div>
+
+                      </div>
+                    </div>
+                    {% assign first_content = false %}
+
+                  {% endif %}
+                {% endfor %}
+              </div>
+
+            </div>
+          </div>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</nav>

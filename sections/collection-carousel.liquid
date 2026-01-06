@@ -1,0 +1,126 @@
+{% comment %}
+Responsive Carousel Slider with:
+- 5 items desktop
+- 3 items tablet
+- 2 items mobile
+- autoplay + infinite loop
+- swipe + drag support
+- images + links from customizer
+{% endcomment %}
+
+<div class="custom-carousel-wrapper">
+  <div class="custom-carousel" id="carousel-{{ section.id }}">
+    {% for block in section.blocks %}
+      <div class="carousel-item">
+        <a href="{{ block.settings.image_link }}">
+          {% if block.settings.carousel_image != blank %}
+            <img src="{{ block.settings.carousel_image | img_url: 'master' }}" alt="carousel image">
+          {% endif %}
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.carousel-item img {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.9;
+}
+
+.custom-carousel-wrapper {
+    padding: 30px 0;
+    background: #f5f5dc70;
+    margin: 0px 0px;
+}
+.custom-carousel img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.slick-slide img {
+    display: block;
+    padding: 5px;
+}
+</style>
+
+<!-- Slick CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
+<!-- Slick JS -->
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  $('#carousel-{{ section.id }}').slick({
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    infinite: true,
+    autoplay: true,
+
+    // 🔑 Continuous scroll
+    autoplaySpeed: 0,
+    speed: 6000,
+    cssEase: 'linear',
+
+    arrows: false,
+    dots: false,
+    swipeToSlide: true,
+    pauseOnHover: false,
+    pauseOnFocus: false,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3
+        }
+      },
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 2
+        }
+      }
+    ]
+  });
+});
+</script>
+
+
+
+
+{% schema %}
+{
+  "name": "Responsive Image Carousel",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "carousel_image",
+          "label": "Upload Image"
+        },
+        {
+          "type": "url",
+          "id": "image_link",
+          "label": "Image Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "Responsive Image Carousel"
+    }
+  ]
+}
+{% endschema %}

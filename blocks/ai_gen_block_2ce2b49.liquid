@@ -1,0 +1,765 @@
+{% doc %}
+  @prompt
+    Needs to create simple footer, 6 columns on desktop
+
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-footer-{{ ai_gen_id }} {
+    background-color: {{ block.settings.background_color }};
+    color: {{ block.settings.text_color }};
+    padding: {{ block.settings.padding_top }}px 0 {{ block.settings.padding_bottom }}px;
+  }
+
+  .ai-footer-container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-footer-content-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.columns_desktop }}, 1fr);
+    gap: 30px;
+    margin-bottom: 40px;
+  }
+
+  .ai-footer-column-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .ai-footer-column-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    font-weight: 600;
+    margin: 0;
+    color: {{ block.settings.heading_color }};
+  }
+
+  .ai-footer-links-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ai-footer-link-{{ ai_gen_id }} {
+    color: {{ block.settings.link_color }};
+    text-decoration: none;
+    font-size: {{ block.settings.text_size }}px;
+    transition: color 0.3s ease;
+  }
+
+  .ai-footer-link-{{ ai_gen_id }}:hover {
+    color: {{ block.settings.link_hover_color }};
+  }
+
+  .ai-footer-text-{{ ai_gen_id }} {
+    font-size: {{ block.settings.text_size }}px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .ai-footer-social-{{ ai_gen_id }} {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  .ai-footer-social-link-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background-color: {{ block.settings.social_bg_color }};
+    color: {{ block.settings.social_icon_color }};
+    border-radius: 50%;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .ai-footer-social-link-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.social_hover_bg_color }};
+  }
+
+  .ai-footer-social-link-{{ ai_gen_id }} svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .ai-footer-bottom-{{ ai_gen_id }} {
+    border-top: 1px solid {{ block.settings.border_color }};
+    padding-top: 24px;
+    text-align: {{ block.settings.copyright_alignment }};
+  }
+
+  .ai-footer-copyright-{{ ai_gen_id }} {
+    font-size: {{ block.settings.copyright_size }}px;
+    color: {{ block.settings.copyright_color }};
+    margin: 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    .ai-footer-content-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_mobile }}, 1fr);
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+
+    .ai-footer-social-{{ ai_gen_id }} {
+      justify-content: center;
+    }
+  }
+{% endstyle %}
+
+<footer class="ai-footer-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-footer-container-{{ ai_gen_id }}">
+    <div class="ai-footer-content-{{ ai_gen_id }}">
+      {% if block.settings.show_company_info %}
+        <div class="ai-footer-column-{{ ai_gen_id }}">
+          {% if block.settings.company_title != blank %}
+            <h3 class="ai-footer-column-title-{{ ai_gen_id }}">{{ block.settings.company_title }}</h3>
+          {% endif %}
+          {% if block.settings.company_description != blank %}
+            <div class="ai-footer-text-{{ ai_gen_id }}">{{ block.settings.company_description }}</div>
+          {% endif %}{% if block.settings.show_social_links %}
+            <div class="ai-footer-social-{{ ai_gen_id }}">
+              {% if settings.social_facebook_link != blank %}
+                <a href="{{ settings.social_facebook_link }}" class="ai-footer-social-link-{{ ai_gen_id }}" target="_blank" rel="noopener" aria-label="Facebook">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </a>
+              {% endif %}
+              {% if settings.social_instagram_link != blank %}
+                <a href="{{ settings.social_instagram_link }}" class="ai-footer-social-link-{{ ai_gen_id }}" target="_blank" rel="noopener" aria-label="Instagram">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                </a>
+              {% endif %}
+              {% if settings.social_twitter_link != blank %}
+                <a href="{{ settings.social_twitter_link }}" class="ai-footer-social-link-{{ ai_gen_id }}" target="_blank" rel="noopener" aria-label="Twitter">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                  </svg>
+                </a>
+              {% endif %}
+              {% if settings.social_youtube_link != blank %}
+                <a href="{{ settings.social_youtube_link }}" class="ai-footer-social-link-{{ ai_gen_id }}" target="_blank" rel="noopener" aria-label="YouTube">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  </svg>
+                </a>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if block.settings.show_quick_links %}
+        <div class="ai-footer-column-{{ ai_gen_id }}">
+          {% if block.settings.quick_links_title != blank %}
+            <h3 class="ai-footer-column-title-{{ ai_gen_id }}">{{ block.settings.quick_links_title }}</h3>
+          {% endif %}
+          <ul class="ai-footer-links-{{ ai_gen_id }}">
+            {% if block.settings.link_1_text != blank and block.settings.link_1_url != blank %}
+              <li><a href="{{ block.settings.link_1_url }}" class="ai-footer-link-{{ ai_gen_id }}">{{ block.settings.link_1_text }}</a></li>
+            {% endif %}
+            {% if block.settings.link_2_text != blank and block.settings.link_2_url != blank %}
+              <li><a href="{{ block.settings.link_2_url }}" class="ai-footer-link-{{ ai_gen_id }}">{{ block.settings.link_2_text }}</a></li>
+            {% endif %}
+            {% if block.settings.link_3_text != blank and block.settings.link_3_url != blank %}
+              <li><a href="{{ block.settings.link_3_url }}" class="ai-footer-link-{{ ai_gen_id }}">{{ block.settings.link_3_text }}</a></li>
+            {% endif %}
+            {% if block.settings.link_4_text != blank and block.settings.link_4_url != blank %}
+              <li><a href="{{ block.settings.link_4_url }}" class="ai-footer-link-{{ ai_gen_id }}">{{ block.settings.link_4_text }}</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      {% endif %}
+
+      {% if block.settings.show_customer_care %}
+        <div class="ai-footer-column-{{ ai_gen_id }}">
+          {% if block.settings.customer_care_title != blank %}
+            <h3 class="ai-footer-column-title-{{ ai_gen_id }}">{{ block.settings.customer_care_title }}</h3>
+          {% endif %}
+          <ul class="ai-footer-links-{{ ai_gen_id }}">
+            {% if block.settings.care_link_1_text != blank and block.settings.care_link_1_url != blank %}
+              <li><a href="{{ block.settings.care_link_1_url }}" class="ai-footer-link-{{ ai_gen_id }}">{{ block.settings.care_link_1_text }}</a></li>
+            {% endif %}
+            {% if block.settings.care_link_2_text != blank and block.settings.care_link_2_url != blank %}
+              <li><a href="{{ block.settings.care_link_2_url }}" class="ai-footer-link-{{ ai_gen_id }}">{{ block.settings.care_link_2_text }}</a></li>
+            {% endif %}
+            {% if block.settings.care_link_3_text != blank and block.settings.care_link_3_url != blank %}
+              <li><a href="{{ block.settings.care_link_3_url }}" class="ai-footer-link-{{ ai_gen_id }}">{{ block.settings.care_link_3_text }}</a></li>
+            {% endif %}
+            {% if block.settings.care_link_4_text != blank and block.settings.care_link_4_url != blank %}
+              <li><a href="{{ block.settings.care_link_4_url }}" class="ai-footer-link-{{ ai_gen_id }}">{{ block.settings.care_link_4_text }}</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      {% endif %}
+
+      {% if block.settings.show_policies %}
+        <div class="ai-footer-column-{{ ai_gen_id }}">
+          {% if block.settings.policies_title != blank %}
+            <h3 class="ai-footer-column-title-{{ ai_gen_id }}">{{ block.settings.policies_title }}</h3>
+          {% endif %}
+          <ul class="ai-footer-links-{{ ai_gen_id }}">
+            {% if block.settings.policy_link_1_text != blank and block.settings.policy_link_1_url != blank %}
+              <li><a href="{{ block.settings.policy_link_1_url }}" class="ai-footer-link-{{ ai_gen_id }}">{{ block.settings.policy_link_1_text }}</a></li>
+            {% endif %}
+            {% if block.settings.policy_link_2_text != blank and block.settings.policy_link_2_url != blank %}
+              <li><a href="{{ block.settings.policy_link_2_url }}" class="ai-footer-link-{{ ai_gen_id }}">{{ block.settings.policy_link_2_text }}</a></li>
+            {% endif %}
+            {% if block.settings.policy_link_3_text != blank and block.settings.policy_link_3_url != blank %}
+              <li><a href="{{ block.settings.policy_link_3_url }}" class="ai-footer-link-{{ ai_gen_id }}">{{ block.settings.policy_link_3_text }}</a></li>
+            {% endif %}
+            {% if block.settings.policy_link_4_text != blank and block.settings.policy_link_4_url != blank %}
+              <li><a href="{{ block.settings.policy_link_4_url }}" class="ai-footer-link-{{ ai_gen_id }}">{{ block.settings.policy_link_4_text }}</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      {% endif %}
+
+      {% if block.settings.show_categories %}
+        <div class="ai-footer-column-{{ ai_gen_id }}">
+          {% if block.settings.categories_title != blank %}
+            <h3 class="ai-footer-column-title-{{ ai_gen_id }}">{{ block.settings.categories_title }}</h3>
+          {% endif %}
+          <ul class="ai-footer-links-{{ ai_gen_id }}">
+            {% if block.settings.category_link_1_text != blank and block.settings.category_link_1_url != blank %}
+              <li><a href="{{ block.settings.category_link_1_url }}" class="ai-footer-link-{{ ai_gen_id }}">{{ block.settings.category_link_1_text }}</a></li>
+            {% endif %}
+            {% if block.settings.category_link_2_text != blank and block.settings.category_link_2_url != blank %}
+              <li><a href="{{ block.settings.category_link_2_url }}" class="ai-footer-link-{{ ai_gen_id }}">{{ block.settings.category_link_2_text }}</a></li>
+            {% endif %}
+            {% if block.settings.category_link_3_text != blank and block.settings.category_link_3_url != blank %}
+              <li><a href="{{ block.settings.category_link_3_url }}" class="ai-footer-link-{{ ai_gen_id }}">{{ block.settings.category_link_3_text }}</a></li>
+            {% endif %}
+            {% if block.settings.category_link_4_text != blank and block.settings.category_link_4_url != blank %}
+              <li><a href="{{ block.settings.category_link_4_url }}" class="ai-footer-link-{{ ai_gen_id }}">{{ block.settings.category_link_4_text }}</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      {% endif %}
+
+      {% if block.settings.show_contact_info %}
+        <div class="ai-footer-column-{{ ai_gen_id }}">
+          {% if block.settings.contact_title != blank %}
+            <h3 class="ai-footer-column-title-{{ ai_gen_id }}">{{ block.settings.contact_title }}</h3>
+          {% endif %}
+          {% if block.settings.contact_address != blank %}
+            <div class="ai-footer-text-{{ ai_gen_id }}">{{ block.settings.contact_address }}</div>
+          {% endif %}
+          {% if block.settings.contact_phone != blank %}
+            <div class="ai-footer-text-{{ ai_gen_id }}">{{ block.settings.contact_phone }}</div>
+          {% endif %}
+          {% if block.settings.contact_email != blank %}
+            <div class="ai-footer-text-{{ ai_gen_id }}">{{ block.settings.contact_email }}</div>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div><div class="ai-footer-bottom-{{ ai_gen_id }}">
+      <p class="ai-footer-copyright-{{ ai_gen_id }}">
+        {% if block.settings.copyright_text != blank %}
+          {{ block.settings.copyright_text }}
+        {% else %}
+          © {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.
+        {% endif %}
+      </p>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Simple footer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "options": [
+        {"value": "2", "label": "2"},
+        {"value": "3", "label": "3"},
+        {"value": "4", "label": "4"},
+        {"value": "5", "label": "5"},
+        {"value": "6", "label": "6"}
+      ],
+      "default": "6"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "options": [
+        {"value": "1", "label": "1"},
+        {"value": "2", "label": "2"}
+      ],
+      "default": "2"
+    },
+    {
+      "type": "header",
+      "content": "Company information"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_company_info",
+      "label": "Show company information",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "company_title",
+      "label": "Company title",
+      "default": "About us"
+    },
+    {
+      "type": "textarea",
+      "id": "company_description",
+      "label": "Company description",
+      "default": "We are passionate about delivering quality products."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_links",
+      "label": "Show social media links",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Quick links"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_links",
+      "label": "Show quick links",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "quick_links_title",
+      "label": "Quick links title",
+      "default": "Quick links"
+    },
+    {
+      "type": "text",
+      "id": "link_1_text",
+      "label": "Link 1 text",
+      "default": "Search"
+    },
+    {
+      "type": "url",
+      "id": "link_1_url",
+      "label": "Link 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "link_2_text",
+      "label": "Link 2 text",
+      "default": "About us"
+    },
+    {
+      "type": "url",
+      "id": "link_2_url",
+      "label": "Link 2 URL"
+    },
+    {
+      "type": "text",
+      "id": "link_3_text",
+      "label": "Link 3 text",
+      "default": "Blog"
+    },
+    {
+      "type": "url",
+      "id": "link_3_url",
+      "label": "Link 3 URL"
+    },
+    {
+      "type": "text",
+      "id": "link_4_text",
+      "label": "Link 4 text",
+      "default": "Careers"
+    },
+    {
+      "type": "url",
+      "id": "link_4_url",
+      "label": "Link 4 URL"
+    },
+    {
+      "type": "header",
+      "content": "Customer care"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_customer_care",
+      "label": "Show customer care",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "customer_care_title",
+      "label": "Customer care title",
+      "default": "Customer care"
+    },
+    {
+      "type": "text",
+      "id": "care_link_1_text",
+      "label": "Care link 1 text",
+      "default": "Contact us"
+    },
+    {
+      "type": "url",
+      "id": "care_link_1_url",
+      "label": "Care link 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "care_link_2_text",
+      "label": "Care link 2 text",
+      "default": "Shipping info"
+    },
+    {
+      "type": "url",
+      "id": "care_link_2_url",
+      "label": "Care link 2 URL"
+    },
+    {
+      "type": "text",
+      "id": "care_link_3_text",
+      "label": "Care link 3 text",
+      "default": "Returns"
+    },
+    {
+      "type": "url",
+      "id": "care_link_3_url",
+      "label": "Care link 3 URL"
+    },
+    {
+      "type": "text",
+      "id": "care_link_4_text",
+      "label": "Care link 4 text",
+      "default": "Size guide"
+    },
+    {
+      "type": "url",
+      "id": "care_link_4_url",
+      "label": "Care link 4 URL"
+    },
+    {
+      "type": "header",
+      "content": "Policies"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_policies",
+      "label": "Show policies",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "policies_title",
+      "label": "Policies title",
+      "default": "Policies"
+    },
+    {
+      "type": "text",
+      "id": "policy_link_1_text",
+      "label": "Policy link 1 text",
+      "default": "Privacy policy"
+    },
+    {
+      "type": "url",
+      "id": "policy_link_1_url",
+      "label": "Policy link 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "policy_link_2_text",
+      "label": "Policy link 2 text",
+      "default": "Terms of service"
+    },
+    {
+      "type": "url",
+      "id": "policy_link_2_url",
+      "label": "Policy link 2 URL"
+    },
+    {
+      "type": "text",
+      "id": "policy_link_3_text",
+      "label": "Policy link 3 text",
+      "default": "Refund policy"
+    },
+    {
+      "type": "url",
+      "id": "policy_link_3_url",
+      "label": "Policy link 3 URL"
+    },
+    {
+      "type": "text",
+      "id": "policy_link_4_text",
+      "label": "Policy link 4 text",
+      "default": "Cookie policy"
+    },
+    {
+      "type": "url",
+      "id": "policy_link_4_url",
+      "label": "Policy link 4 URL"
+    },
+    {
+      "type": "header",
+      "content": "Categories"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_categories",
+      "label": "Show categories",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "categories_title",
+      "label": "Categories title",
+      "default": "Categories"
+    },
+    {
+      "type": "text",
+      "id": "category_link_1_text",
+      "label": "Category link 1 text",
+      "default": "Women"
+    },
+    {
+      "type": "url",
+      "id": "category_link_1_url",
+      "label": "Category link 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "category_link_2_text",
+      "label": "Category link 2 text",
+      "default": "Men"
+    },
+    {
+      "type": "url",
+      "id": "category_link_2_url",
+      "label": "Category link 2 URL"
+    },
+    {
+      "type": "text",
+      "id": "category_link_3_text",
+      "label": "Category link 3 text",
+      "default": "Accessories"
+    },
+    {
+      "type": "url",
+      "id": "category_link_3_url",
+      "label": "Category link 3 URL"
+    },
+    {
+      "type": "text",
+      "id": "category_link_4_text",
+      "label": "Category link 4 text",
+      "default": "Sale"
+    },
+    {
+      "type": "url",
+      "id": "category_link_4_url",
+      "label": "Category link 4 URL"
+    },
+    {
+      "type": "header",
+      "content": "Contact information"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_contact_info",
+      "label": "Show contact information",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "contact_title",
+      "label": "Contact title",
+      "default": "Contact"
+    },
+    {
+      "type": "textarea",
+      "id": "contact_address",
+      "label": "Address",
+      "default": "123 Main Street\nNew York, NY 10001"
+    },
+    {
+      "type": "text",
+      "id": "contact_phone",
+      "label": "Phone number",
+      "default": "+1 (555) 123-4567"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Email address",
+      "default": "hello@example.com"
+    },
+    {
+      "type": "header",
+      "content": "Copyright"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright text"
+    },
+    {
+      "type": "select",
+      "id": "copyright_alignment",
+      "label": "Copyright alignment",
+      "options": [
+        {"value": "left", "label": "Left"},
+        {"value": "center", "label": "Center"},
+        {"value": "right", "label": "Right"}
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#f8f8f8"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "link_hover_color",
+      "label": "Link hover color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "color",
+      "id": "copyright_color",
+      "label": "Copyright text color",
+      "default": "#999999"
+    },
+    {
+      "type": "color",
+      "id": "social_bg_color",
+      "label": "Social icon background",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "social_icon_color",
+      "label": "Social icon color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "social_hover_bg_color",
+      "label": "Social icon hover background",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 14,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 12,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Text size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "copyright_size",
+      "min": 10,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "label": "Copyright text size",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 30
+    }
+  ],
+  "presets": [
+    {
+      "name": "Simple footer"
+    }
+  ],
+  "tag": null
+}
+{% endschema %}

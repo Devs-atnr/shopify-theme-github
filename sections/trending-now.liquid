@@ -1,0 +1,336 @@
+{% comment %}
+  Shopify Dawn Theme - Custom Trending Now Section
+  Desktop: Horizontal slider (Men's / Women's)
+  Mobile: Stacked layout
+  Features:
+  - Tab switch (Men's / Women's)
+  - View All button redirects based on active tab
+  - Arrow slider navigation (desktop only)
+  - Handles via Customizer
+{% endcomment %}
+
+{% schema %}
+{
+  "name": "Trending Now Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "men_collection",
+      "label": "Men's Collection Handle",
+      "default": "mens-collection"
+    },
+    {
+      "type": "text",
+      "id": "women_collection",
+      "label": "Women's Collection Handle",
+      "default": "womens-collection"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Trending Now"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trending Now Section",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="trending-now-section">
+  {% assign men_collection = collections[section.settings.men_collection] %}
+{% assign women_collection = collections[section.settings.women_collection] %}
+
+  <div class="tab-header">
+    <h2>{{ section.settings.section_title }}</h2>
+    <div class="tabs">
+      <button class="tab-btn active" data-target="men">Men's</button>
+      <span>/</span>
+      <button class="tab-btn" data-target="women">Women's</button>
+    </div>
+
+      <div class="view-all-wrapper">
+    <a href="/collections/{{ section.settings.men_collection }}" class="view-all-button">View all</a>
+  </div>
+  </div>
+
+  <div class="tab-content-wrapper">
+    <div class="tab-content active" id="men" data-collection="{{ section.settings.men_collection }}">
+
+
+      <div class="product-slider desktop">
+  <button class="arrow left" aria-label="Scroll left">&#10094;</button>
+  <div class="product-slider-window">
+    <div class="product-track">
+      
+     {% for product in men_collection.products  %}
+    <div class="product-card">
+      
+      <a href="{{ product.url }}">
+     
+        <img src="{{ product.featured_image | img_url: '400x' }}" alt="{{ product.title }}">
+        <p class="vendor">{{ product.vendor }}</p>
+        <p class="title">{{ product.title | truncate: 30 }}</p>
+        <p class="price">{{ product.price | money }}</p>
+      </a>
+    </div>
+  {% endfor %}
+    </div>
+  </div>
+  <button class="arrow right" aria-label="Scroll right">&#10095;</button>
+</div>
+
+
+    
+      <div class="product-grid mobile">
+  {% for product in women_collection.products %}
+    <div class="product-card">
+      <a href="{{ product.url }}">
+        <img src="{{ product.featured_image | img_url: '400x' }}" alt="{{ product.title }}">
+        <p class="vendor">{{ product.vendor }}</p>
+        <p class="title">{{ product.title | truncate: 30 }}</p>
+        <p class="price">{{ product.price | money }}</p>
+      </a>
+    </div>
+  {% endfor %}
+
+
+        
+      </div>
+    </div>
+
+    <div class="tab-content" id="women" data-collection="{{ section.settings.women_collection }}">
+
+      <div class="product-slider desktop">
+  <button class="arrow left" aria-label="Scroll left">&#10094;</button>
+  <div class="product-slider-window">
+    <div class="product-track">
+ 
+       {% for product in women_collection.products %}
+    <div class="product-card">
+     
+      <a href="{{ product.url }}">
+        
+        <img src="{{ product.featured_image | img_url: '400x' }}" alt="{{ product.title }}">
+        <p class="vendor">{{ product.vendor }}</p>
+        <p class="title">{{ product.title | truncate: 30 }}</p>
+        <p class="price">{{ product.price | money }}</p>
+      </a>
+    </div>
+  {% endfor %}
+    </div>
+  </div>
+  <button class="arrow right" aria-label="Scroll right">&#10095;</button>
+</div>
+      
+
+<div class="product-grid mobile">
+  {% for product in men_collection.products %}
+    <div class="product-card">
+      <a href="{{ product.url }}">
+        <img src="{{ product.featured_image | img_url: '400x' }}" alt="{{ product.title }}">
+        <p class="vendor">{{ product.vendor }}</p>
+        <p class="title">{{ product.title | truncate: 30 }}</p>
+        <p class="price">{{ product.price | money }}</p>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+
+    </div>
+  </div>
+
+
+</section>
+
+<style>
+  .tab-content-wrapper {
+    overflow: hidden;
+    width: 70%;
+}
+.product-slider-window {
+  overflow: hidden;
+  width: 100%;
+}
+
+
+.product-card {
+    flex: 0 0 auto;
+    width: 250px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #cbcbcb;
+    padding: 0px 30px 25px 30px;
+}
+p.vendor {
+    margin-bottom: 2px;
+    color: #232323;
+    font-weight: 600;
+}
+
+.product-card .title {
+    margin: 0px;
+    color: #232323;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+  .product-card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+  
+.trending-now-section {
+  padding: 3rem 1rem;
+  position: relative;
+      display: flex;
+    align-items: flex-start;
+}
+.tab-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 30% !important;
+    height: 100%;
+}
+.tabs {
+    display: flex;
+    gap: 1.5rem;
+   font-size: 30px;
+    margin-top: 0.5rem;
+    margin-bottom: 22rem;
+}
+.tabs .tab-btn {
+    background: none;
+    border: none;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    font-size: 30px;
+    font-family: jost;
+}
+.tabs .tab-btn.active {
+  color: #B58429;
+
+}
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
+}
+.desktop {
+  display: none;
+}
+.mobile {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+.product-slider {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.product-track {
+  display: flex;
+  transition: transform 0.3s ease;
+  gap: 3rem;
+}
+.arrow {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+}
+
+  .arrow:hover {
+  background: black; color:#fff;}
+  
+.view-all-wrapper {
+  text-align: left;
+  margin-top: 1rem;
+}
+.view-all-button {
+    font-family: 'Jost';
+    text-align: center;
+    border: 1px solid #000;
+    width: 180px !important;
+    padding: 15px 55px;
+    margin: 0 auto;
+    font-weight: 500;
+    color: #232323;
+}
+
+.view-all-button:hover     { background: #a1722b; color: #fff;   border: 1px solid #a1722b; } 
+    .desktop {
+    display: flex !important;
+  }
+  .mobile {
+    display: none !important;
+  }
+@media(max-width: 768px) {
+.trending-now-section {flex-direction: column;}
+  .tab-header {    width: 100% !important; margin-bottom: 35px;}
+  .tab-content-wrapper {  width: 100%; }
+  .tabs { margin-bottom: 6rem; }
+  .view-all-button {  padding: 10px 40px; }
+
+  
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const tabs = document.querySelectorAll('.tab-btn');
+  const contents = document.querySelectorAll('.tab-content');
+  const viewAllBtn = document.querySelector('.view-all-button');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      contents.forEach(c => c.classList.remove('active'));
+      document.getElementById(tab.dataset.target).classList.add('active');
+
+      const activeCollection = document.getElementById(tab.dataset.target).dataset.collection;
+      viewAllBtn.href = `/collections/${activeCollection}`;
+    });
+  });
+
+  // Basic slider functionality (desktop only)
+  document.querySelectorAll('.product-slider').forEach(slider => {
+    const track = slider.querySelector('.product-track');
+    const leftArrow = slider.querySelector('.arrow.left');
+    const rightArrow = slider.querySelector('.arrow.right');
+
+    let scrollX = 0;
+    leftArrow.addEventListener('click', () => {
+      scrollX = Math.max(scrollX - 300, 0);
+      track.style.transform = `translateX(-${scrollX}px)`;
+    });
+    rightArrow.addEventListener('click', () => {
+      scrollX += 300;
+      track.style.transform = `translateX(-${scrollX}px)`;
+    });
+  });
+});
+</script>

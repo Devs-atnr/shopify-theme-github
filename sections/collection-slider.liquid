@@ -1,0 +1,165 @@
+{% schema %}
+{
+  "name": "Collection Slider",
+  "settings": [
+    {"type": "text",
+   "id": "custom_class",
+   "label": "Custom CSS Class (optional)" },
+ {
+          "type": "text",
+          "id": "head-one",
+          "label": "Section Title"
+        }
+
+
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Slide Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Collection Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 30,
+  "presets": [
+    {
+      "name": "Collection Slider",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="collection-slider-wrapper page-width {{ section.settings.custom_class }}">
+  <h2 class="title inline-richtext h1 scroll-trigger animate--slide-in coll-head">{{ section.settings.head-one }} </h2>
+    <div class="collection-slider swiper">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide">
+            <a href="{{ block.settings.link }}" class="slide-link">
+              <div class="slide-content">
+                
+                <img src="{{ block.settings.image | img_url: '720x' }}" alt="{{ block.settings.title }}">
+              </div>
+            
+            <div class="col-head"><h3 class="slide-title">{{ block.settings.title }}</h3></div> </a>
+          </div>
+          
+        {% endfor %}
+      </div>
+    </div>
+  
+</div>
+
+<style>
+    .coll-head {text-transform: uppercase; }
+  .collection-slider-wrapper {
+    overflow-x: hidden;
+    /* padding: 0 75px; */
+  }
+
+  .collection-slider .swiper-slide {
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .slide-content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    text-align: center;
+  }
+
+  .slide-content img {
+    transition: transform .5s ease;
+  }
+
+  {% comment %} .slide-content:hover img {
+    transform: scale(1.5);
+  } {% endcomment %}
+
+  .col-head {
+    {% comment %} padding: 20px; {% endcomment %}
+    margin-top: 12px;
+    text-align: center;
+    order: -1;
+    position: unset;
+    left: 0;
+    right: 0;
+    bottom: 80px;
+    z-index: 9;
+  }
+.slide-title {text-decoration: underline; font-size: 15px; line-height: 15px; font-weight: 500; color: #000;}
+
+.collection-slider .swiper-slide img {
+  width: 100% !important;  /* Make the image fit the container */
+  height: auto;
+  object-fit: cover;  /* Prevent images from stretching */
+  margin: 0;           /* Remove any unwanted margins */
+}
+
+
+  .slide-link {
+    text-decoration: none;
+    /* Remove underline from link */
+    display: block;
+  }
+
+/* For mobile devices, ensure proper image scaling */
+@media screen and (max-width: 768px) {
+  .swiper-slide {
+    width: 100%;  /* Full width */
+    margin: 0;    /* Remove any extra margin */
+  }
+  .collection-slider-wrapper {
+    padding: 0 10px;  /* Add some padding around the collection */
+  }
+  .slide-title {
+    font-size: 14px !important;  /* Adjust font size for mobile */
+  }
+}
+
+</style>
+
+ <script>
+new Swiper(".collection-slider", {
+  slidesPerView: 1,  // Start with 1 slide visible
+  spaceBetween: 15,  // Adjust spacing between slides
+  loop: true,
+  autoplay: {
+    delay: 12000,
+  },
+  breakpoints: {
+    380: {
+      slidesPerView: 2,  // Show 1 slide on small mobile screens
+    },
+    768: {
+      slidesPerView: 2,  // Show 2 slides on medium mobile screens
+    },
+    1024: {
+      slidesPerView: 3,  // Show 3 slides on larger screens
+    }
+  },
+  observer: true,
+  observeParents: true,
+});
+
+
+</script> 

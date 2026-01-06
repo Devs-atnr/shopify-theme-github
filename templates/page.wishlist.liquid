@@ -1,0 +1,143 @@
+<div class="page-width">
+  <h2>Wishlist</h2>
+  <div class="wishlist-row"></div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const container = document.querySelector(".wishlist-row");
+  container.innerHTML = "";
+
+  const handles = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key.startsWith("wishHANDLE-")) {
+      handles.push(localStorage.getItem(key));
+    }
+  }
+
+
+if (handles.length === 0) {
+  container.innerHTML = "<p>You don't have any products in the wishlist yet.</p>";
+  return;
+
+
+    }
+
+  handles.forEach(handle => {
+    fetch(`/products/${handle}.js`)
+      .then(res => res.json())
+      .then(product => {
+        const html = `
+          <div class="wishlist-grid">
+            <span class="wishlist-close" data-product-handle="${handle}">x</span>
+            <a href="${product.url}">
+              <img src="${product.images[0]}" width="200" alt="${product.title}" />
+            </a>
+            <h4>${product.title}</h4>
+            <p>${(product.price / 100).toFixed(2)} ${product.currency || 'SAR'}</p>
+          </div>
+        `;
+        container.insertAdjacentHTML("beforeend", html);
+      })
+      .catch(error => {
+        console.error("Error loading product:", handle, error);
+      });
+  });
+
+  // Remove logic
+  container.addEventListener("click", function (e) {
+    if (e.target.classList.contains("wishlist-close")) {
+      const handle = e.target.dataset.productHandle;
+      localStorage.removeItem(`wishHANDLE-${handle}`);
+      e.target.closest(".wishlist-grid").remove();
+      updateWishlistCount();
+      if (document.querySelectorAll('.wishlist-grid').length === 0) {
+        container.innerHTML = "<p>You don't have any products in the wishlist yet.</p>";
+      }
+    }
+  });
+});
+</script>
+
+<style>
+
+.wishlist-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); 
+  gap: 1rem;
+  justify-content: center;
+  padding: 0 0 5rem 0;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-x: hidden;
+  width: 100%;
+   
+  
+}
+
+.wishlist-grid {
+    display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  box-sizing: border-box;
+  padding: 0 30px;
+  border: 1px solid #d4d4d4;
+  width: 100%;
+  }
+
+  .wishlist-grid img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+  span.wishlist-close
+ {
+    background: #a2732a;
+    padding: 2px 12px;
+    display: inline-block;
+    color: #fff;
+    cursor: pointer;
+   position: absolute;
+   right: 0;
+}
+  .wishlist-grid p
+ {
+    color: #a2732a;
+    margin: 6px 0px;
+}
+
+
+/* Large Tablets (4 columns) */
+@media (max-width: 1200px) {
+    .wishlist-row {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Medium Tablets (3 columns) */
+@media (max-width: 992px) {
+    .wishlist-row {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Small Tablets / Large Phones (2 columns) */
+@media (max-width: 768px) {
+    .wishlist-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Small Phones (1 column) */
+@media (max-width: 480px) {
+    .wishlist-row {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+  </style>
+
